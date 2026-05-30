@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotto Elite Pro V5 - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #111c24;
+            --bg-secondary: #1a2836;
+            --bg-card: #152230;
+            --accent-blue: #00bfff;
+            --accent-orange: #ff5722;
+            --text-main: #ffffff;
+            --text-muted: #8a99ad;
+            --pool-yellow: #ffb300;
+            --pool-red: #e53935;
+            --pool-gray: #757575;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .header-container {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .sub-header {
+            color: var(--accent-orange);
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .main-title {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .main-title i {
+            color: var(--accent-blue);
+        }
+
+        /* Sezione Mappa del Calore */
+        .heatmap-section {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 15px;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .section-title {
+            font-size: 13px;
+            color: var(--accent-orange);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .heatmap-badge {
+            padding: 12px 8px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: transform 0.2s;
+            color: #000000;
+        }
+
+        .heatmap-badge:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Classi dinamiche per i colori delle ruote */
+        .badge-gialla { background-color: var(--pool-yellow); color: #000; }
+        .badge-rossa { background-color: var(--pool-red); color: #fff; }
+        .badge-grigia { background-color: #e0e0e0; color: #000; }
+
+        /* Navigazione Tabelloni (Colpo 3 Rimosso) */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            background-color: var(--bg-secondary);
+            color: var(--text-muted);
+            border: none;
+            padding: 10px 24px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-orange);
+            color: var(--text-main);
+            box-shadow: 0 4px 10px rgba(255, 87, 34, 0.4);
+        }
+
+        /* Grid delle schede previsionali */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .previsione-card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: var(--accent-orange);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .card-ruote {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            margin-top: 15px;
+            color: var(--text-main);
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .numbers-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .ball {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            border: 2px solid #4caf50;
+            color: #4caf50;
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .budget-box {
+            background-color: rgba(0, 191, 255, 0.1);
+            border: 1px solid var(--accent-blue);
+            border-radius: 6px;
+            padding: 6px 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .budget-label {
+            font-size: 9px;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .budget-val {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .accuracy-box {
+            text-align: right;
+        }
+
+        .accuracy-label {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .accuracy-val {
+            font-size: 14px;
+            font-weight: 800;
+            color: #ff5722;
+        }
+
+        .error-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .main-title { font-size: 24px; }
+            .heatmap-grid { grid-template-columns: repeat(3, 1fr); }
+            .card-ruote { font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="sub-header">Geometric Mirror • Analisi Simmetrie Isotope</div>
+        <div class="main-title">
+            <i class="fa-solid fa-gem"></i> LOTTO ELITE PRO V5 <i class="fa-solid fa-gem"></i>
+        </div>
+    </div>
+
+    <div class="heatmap-section">
+        <div class="section-title"><i class="fa-solid fa-fire"></i> Mappa del Calore Ruote (Tensione Cicli)</div>
+        <div class="heatmap-grid" id="heatmapGrid"></div>
+    </div>
+
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="switchTab(event, 'nuovi')">Nuove</button>
+        <button class="tab-btn" onclick="switchTab(event, 'colpo2')">Colpo 2</button>
+    </div>
+
+    <div class="cards-grid" id="cardsGrid"></div>
+
+    <script>
+        let globaleDati = null;
+        let tabAttivo = 'nuovi';
+
+        async function caricaDati() {
+            const cardsGrid = document.getElementById('cardsGrid');
+            try {
+                const risposta = await fetch('risultati_v4.json?v=' + Date.now());
+                if (!risposta.ok) {
+                    throw new Error("Impossibile leggere il file dei risultati.");
+                }
+                globaleDati = await risposta.json();
+                
+                renderMappaCalore(globaleDati);
+                renderTabellone(tabAttivo);
+            } catch (err) {
+                console.error(err);
+                cardsGrid.innerHTML = `<div class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Errore nel caricamento dei dati previsionali.</div>`;
+            }
+        }
+
+        function renderMappaCalore(data) {
+            const heatmapGrid = document.getElementById('heatmapGrid');
+            heatmapGrid.innerHTML = '';
+
+            if (!data || !data.mappa_calore) {
+                console.warn("Mappa calore non trovata o non disponibile.");
+                return;
+            }
+
+            const ruoteInserite = new Set();
+
+            Object.entries(data.mappa_calore).forEach(([ruota, stato]) => {
+                const ruotaFormattata = ruota.charAt(0).toUpperCase() + ruota.slice(1).toLowerCase();
+                
+                if (!ruoteInserite.has(ruotaFormattata)) {
+                    ruoteInserite.add(ruotaFormattata);
+                    
+                    const badge = document.createElement('div');
+                    badge.className = `heatmap-badge badge-${stato.toLowerCase()}`;
+                    badge.innerText = ruotaFormattata;
+                    heatmapGrid.appendChild(badge);
+                }
+            });
+        }
+
+        function renderTabellone(tabKey) {
+            const cardsGrid = document.getElementById('cardsGrid');
+            cardsGrid.innerHTML = '';
+
+            if (!globaleDati || !globaleDati.tabelloni || !globaleDati.tabelloni[tabKey]) {
+                cardsGrid.innerHTML = `<div class="error-message">Nessuna previsione disponibile per questa sezione.</div>`;
+                return;
+            }
+
+            const elencoPrevisioni = globaleDati.tabelloni[tabKey];
+
+            if (elencoPrevisioni.length === 0) {
+                cardsGrid.innerHTML = `<div class="error-message">Nessuna previsione disponibile per il tabellone corrente.</div>`;
+                return;
+            }
+
+            elencoPrevisioni.forEach(info => {
+                const card = document.createElement('div');
+                card.className = 'previsione-card';
+
+                let pallineHtml = '';
+                if(Array.isArray(info.numeri)) {
+                    info.numeri.forEach(num => {
+                        pallineHtml += `<div class="ball">${num}</div>`;
+                    });
+                }
+
+                card.innerHTML = `
+                    <div class="card-tag">${tabKey === 'nuovi' ? 'Nuova' : 'COLPO 2'}</div>
+                    <div class="card-ruote">${info.ruote}</div>
+                    <div class="numbers-row">${pallineHtml}</div>
+                    <div class="info-row">
+                        <div class="budget-box">
+                            <span class="budget-label">Budget Consigliato:</span>
+                            <span class="budget-val">4.00€</span>
+                        </div>
+                        <div class="accuracy-box">
+                            <div class="accuracy-label">Accuratezza:</div>
+                            <div class="accuracy-val">${info.score}</div>
+                        </div>
+                    </div>
+                `;
+                cardsGrid.appendChild(card);
+            });
+        }
+
+        function switchTab(event, tabKey) {
+            tabAttivo = tabKey;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderTabellone(tabKey);
+        }
+
+        window.onload = caricaDati;
+    </script>
+</body>
+</html>
