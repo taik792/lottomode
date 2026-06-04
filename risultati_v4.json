@@ -1,150 +1,130 @@
 {
     "mappa_calore": {
         "Bari": "gialla",
+        "Cagliari": "gialla",
         "Firenze": "gialla",
+        "Genova": "gialla",
         "Milano": "grigia",
         "Napoli": "gialla",
         "Palermo": "rossa",
         "Roma": "rossa",
         "Torino": "rossa",
-        "Venezia": "gialla",
-        "Cagliari": "gialla",
-        "Genova": "gialla"
+        "Venezia": "gialla"
     },
     "tabelloni": {
         "nuovi": [
             {
-                "ruote": "Bari - Napoli",
+                "ruote": "Cagliari - Milano",
                 "numeri": [
-                    2,
-                    32
-                ],
-                "score": "174%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Bari - Cagliari",
-                "numeri": [
-                    24,
-                    84
+                    6,
+                    36
                 ],
                 "score": "171%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Cagliari - Napoli",
-                "numeri": [
-                    32,
-                    62
-                ],
-                "score": "171%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Bari - Torino",
-                "numeri": [
-                    20,
-                    80
-                ],
-                "score": "168%",
-                "colore_r1": "gialla",
-                "colore_r2": "rossa"
-            },
-            {
-                "ruote": "Bari - Milano",
-                "numeri": [
-                    58,
-                    88
-                ],
-                "score": "167%",
                 "colore_r1": "gialla",
                 "colore_r2": "grigia"
-            }
-        ],
-        "colpo2": [
-            {
-                "ruote": "Genova - Palermo",
-                "numeri": [
-                    21,
-                    51
-                ],
-                "score": "162%",
-                "colore_r1": "gialla",
-                "colore_r2": "rossa"
             },
             {
                 "ruote": "Bari - Cagliari",
                 "numeri": [
-                    17,
-                    47
+                    10,
+                    70
                 ],
-                "score": "160%",
+                "score": "169%",
                 "colore_r1": "gialla",
                 "colore_r2": "gialla"
             },
             {
-                "ruote": "Palermo - Roma",
-                "numeri": [
-                    37,
-                    67
-                ],
-                "score": "156%",
-                "colore_r1": "rossa",
-                "colore_r2": "rossa"
-            },
-            {
-                "ruote": "Milano - Napoli",
-                "numeri": [
-                    13,
-                    73
-                ],
-                "score": "155%",
-                "colore_r1": "grigia",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Firenze - Venezia",
-                "numeri": [
-                    33,
-                    63
-                ],
-                "score": "154%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            }
-        ],
-        "colpo3": [
-            {
-                "ruote": "Bari - Milano",
+                "ruote": "Firenze - Genova",
                 "numeri": [
                     16,
                     76
                 ],
-                "score": "142%",
+                "score": "168%",
                 "colore_r1": "gialla",
-                "colore_r2": "grigia"
+                "colore_r2": "gialla"
             },
             {
-                "ruote": "Firenze - Palermo",
+                "ruote": "Cagliari - Torino",
                 "numeri": [
-                    30,
-                    90
+                    10,
+                    40
                 ],
-                "score": "139%",
+                "score": "167%",
                 "colore_r1": "gialla",
                 "colore_r2": "rossa"
             },
             {
-                "ruote": "Palermo - Torino",
+                "ruote": "Bari - Venezia, Roma",
                 "numeri": [
-                    36,
-                    66
+                    46,
+                    76
                 ],
-                "score": "138%",
-                "colore_r1": "rossa",
+                "score": "168%",
+                "colore_r1": "gialla",
+                "colore_r2": "gialla"
+            },
+            {
+                "ruote": "Firenze - Roma",
+                "numeri": [
+                    38,
+                    68
+                ],
+                "score": "161%",
+                "colore_r1": "gialla",
+                "colore_r2": "rossa"
+            }
+        ],
+        "colpo2": [
+            {
+                "ruote": "Bari - Torino, Firenze",
+                "numeri": [
+                    25,
+                    55
+                ],
+                "score": "160%",
+                "colore_r1": "gialla",
+                "colore_r2": "rossa"
+            },
+            {
+                "ruote": "Cagliari - Venezia",
+                "numeri": [
+                    31,
+                    61
+                ],
+                "score": "153%",
+                "colore_r1": "gialla",
+                "colore_r2": "gialla"
+            },
+            {
+                "ruote": "Bari - Palermo",
+                "numeri": [
+                    27,
+                    87
+                ],
+                "score": "152%",
+                "colore_r1": "gialla",
+                "colore_r2": "rossa"
+            }
+        ],
+        "colpo3": [
+            {
+                "ruote": "Milano - Venezia, Torino",
+                "numeri": [
+                    20,
+                    80
+                ],
+                "score": "152%",
+                "colore_r1": "grigia",
+                "colore_r2": "gialla"
+            },
+            {
+                "ruote": "Napoli - Torino",
+                "numeri": [
+                    14,
+                    44
+                ],
+                "score": "145%",
+                "colore_r1": "gialla",
                 "colore_r2": "rossa"
             }
         ]
