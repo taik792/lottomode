@@ -20,7 +20,7 @@ def determina_esagono(numero):
 
 def analizza_statistiche_ruote(archivio):
     """
-    Analizza la cronologia per calcolare ritardi e frequenze recenti (ultimi 25 colpi).
+    Analizza la cronologia per calcolare ritardi e frequenze recenti (ultimi 35 colpi).
     """
     stats = {}
     for chiave, estrazioni_ruota in archivio.items():
@@ -34,11 +34,11 @@ def analizza_statistiche_ruote(archivio):
         ritardi = {n: 0 for n in range(1, 91)}
         frequenza_recente = {n: 0 for n in range(1, 91)}
         
-        ultime_25 = estrazioni_ruota[-25:] if len(estrazioni_ruota) >= 25 else estrazioni_ruota
+        ultime_35 = estrazioni_ruota[-35:] if len(estrazioni_ruota) >= 35 else estrazioni_ruota
         
-        for estrazione in ultime_25:
+        for estrazione in ultime_35:
             if isinstance(estrazione, list):
-                for num in estrazione[:5]:
+                for num in estrazione[:10]:
                     if 1 <= int(num) <= 90:
                         frequenza_recente[int(num)] += 1
                         
