@@ -6,142 +6,142 @@
     "previsioni": {
         "Bari": {
             "numeri_estrazione": [
-                78,
-                89,
-                73,
-                50,
-                28
+                11,
+                36,
+                33,
+                25,
+                57
             ],
-            "ambata": 16,
+            "ambata": 68,
             "ambo": [
-                16,
-                61
+                68,
+                23
             ]
         },
         "Cagliari": {
             "numeri_estrazione": [
-                2,
-                59,
-                30,
-                60,
-                9
+                57,
+                4,
+                70,
+                22,
+                73
             ],
-            "ambata": 11,
+            "ambata": 40,
             "ambo": [
-                11,
-                56
+                40,
+                85
             ]
         },
         "Firenze": {
             "numeri_estrazione": [
-                62,
-                56,
-                28,
-                72,
-                23
+                39,
+                71,
+                83,
+                31,
+                72
             ],
-            "ambata": 85,
+            "ambata": 21,
             "ambo": [
-                85,
-                40
+                21,
+                66
             ]
         },
         "Genova": {
             "numeri_estrazione": [
-                20,
-                14,
-                19,
-                32,
-                24
+                79,
+                89,
+                18,
+                80,
+                5
             ],
-            "ambata": 44,
+            "ambata": 84,
             "ambo": [
-                44,
-                89
+                84,
+                39
             ]
         },
         "Milano": {
             "numeri_estrazione": [
-                25,
-                30,
-                78,
-                72,
-                40
+                15,
+                68,
+                19,
+                49,
+                87
             ],
-            "ambata": 65,
+            "ambata": 12,
             "ambo": [
-                65,
-                20
+                12,
+                57
             ]
         },
         "Napoli": {
             "numeri_estrazione": [
-                33,
-                69,
-                25,
-                17,
-                26
+                10,
+                56,
+                66,
+                58,
+                7
             ],
-            "ambata": 59,
+            "ambata": 17,
             "ambo": [
-                59,
-                14
+                17,
+                62
             ]
         },
         "Palermo": {
             "numeri_estrazione": [
-                63,
-                24,
-                82,
-                1,
-                8
-            ],
-            "ambata": 71,
-            "ambo": [
-                71,
-                26
-            ]
-        },
-        "Roma": {
-            "numeri_estrazione": [
-                21,
-                17,
-                23,
-                71,
-                31
-            ],
-            "ambata": 52,
-            "ambo": [
-                52,
-                7
-            ]
-        },
-        "Torino": {
-            "numeri_estrazione": [
-                2,
-                76,
-                71,
-                58,
-                72
-            ],
-            "ambata": 74,
-            "ambo": [
-                74,
-                29
-            ]
-        },
-        "Venezia": {
-            "numeri_estrazione": [
-                58,
-                48,
-                51,
-                78,
-                67
+                50,
+                27,
+                19,
+                6,
+                75
             ],
             "ambata": 35,
             "ambo": [
                 35,
                 80
+            ]
+        },
+        "Roma": {
+            "numeri_estrazione": [
+                60,
+                24,
+                39,
+                79,
+                62
+            ],
+            "ambata": 32,
+            "ambo": [
+                32,
+                77
+            ]
+        },
+        "Torino": {
+            "numeri_estrazione": [
+                75,
+                47,
+                41,
+                84,
+                45
+            ],
+            "ambata": 30,
+            "ambo": [
+                30,
+                75
+            ]
+        },
+        "Venezia": {
+            "numeri_estrazione": [
+                56,
+                8,
+                84,
+                38,
+                9
+            ],
+            "ambata": 65,
+            "ambo": [
+                65,
+                20
             ]
         }
     }
