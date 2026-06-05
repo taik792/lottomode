@@ -89,63 +89,52 @@
 
 <div class="container">
     <h1>Previsioni del Motore Lotto v4</h1>
-    <div id="info-concorso" class="info-concorso">Caricamento dati in corso...</div>
+    <div id="info-concorso" class="info-concorso">Ultima estrazione elaborata dall'archivio</div>
 
     <table id="tabella-risultati" style="display: none;">
         <thead>
             <tr>
                 <th>Ruota</th>
-                <th>Numeri Estratti</th>
+                <th>Ultimi Numeri Estratti</th>
                 <th>Ambata Calcolata</th>
                 <th>Ambo Consigliato</th>
             </tr>
         </thead>
         <tbody id="corpo-tabella">
-            <!-- I dati verranno inseriti qui dallo script JS -->
         </tbody>
     </table>
     <div id="errore" class="error-message" style="display: none;"></div>
 </div>
 
 <script>
-    // Funzione per caricare il file JSON dei risultati
     async function caricaRisultati() {
         try {
             const response = await fetch('risultati_v4.json');
             if (!response.ok) {
-                throw new Error("Impossibile caricare il file risultati_v4.json. Verifica che il motore sia stato eseguito.");
+                throw new Error("Impossibile caricare il file risultati_v4.json. Controlla il flusso dell'algoritmo.");
             }
             const data = await response.json();
             
-            // Aggiorna info concorso
-            document.getElementById('info-concorso').innerHTML = 
-                `Elaborazione basata sul concorso <strong>n. ${data.info_concorso.numero}</strong> del <strong>${data.info_concorso.data}</strong>`;
-            
             const corpoTabella = document.getElementById('corpo-tabella');
-            corpoTabella.innerHTML = ''; // Svuota tabella
+            corpoTabella.innerHTML = ''; 
             
-            // Cicla sulle previsioni delle ruote
             for (const [ruota, info] of Object.entries(data.previsioni)) {
                 const tr = document.createElement('tr');
                 
-                // Cella Ruota
                 const tdRuota = document.createElement('td');
                 tdRuota.className = 'ruota-name';
                 tdRuota.textContent = ruota;
                 tr.appendChild(tdRuota);
                 
-                // Cella Numeri Estratti
                 const tdEstratti = document.createElement('td');
                 tdEstratti.className = 'estrazione-numeri';
                 tdEstratti.textContent = info.numeri_estrazione.join(' - ');
                 tr.appendChild(tdEstratti);
                 
-                // Cella Ambata
                 const tdAmbata = document.createElement('td');
                 tdAmbata.innerHTML = `<span class="evidenziato-ambata">${info.ambata}</span>`;
                 tr.appendChild(tdAmbata);
                 
-                // Cella Ambo
                 const tdAmbo = document.createElement('td');
                 tdAmbo.innerHTML = `<span class="evidenziato-ambo">${info.ambo.join(' - ')}</span>`;
                 tr.appendChild(tdAmbo);
@@ -153,7 +142,6 @@
                 corpoTabella.appendChild(tr);
             }
             
-            // Mostra la tabella
             document.getElementById('tabella-risultati').style.display = 'table';
             
         } catch (error) {
@@ -164,7 +152,6 @@
         }
     }
 
-    // Avvia il caricamento al caricamento della pagina
     window.onload = caricaRisultati;
 </script>
 
