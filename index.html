@@ -54,7 +54,6 @@
         .ruota-name {
             font-weight: bold;
             color: #2980b9;
-            text-transform: capitalize;
         }
         .estrazione-numeri {
             color: #555;
@@ -109,11 +108,17 @@
 <script>
     async function caricaRisultati() {
         try {
-            const response = await fetch('risultati_v4.json');
+            // Aggiungiamo un timestamp per evitare la cache del browser su GitHub Pages
+            const response = await fetch('risultati_v4.json?t=' + new Date().getTime());
             if (!response.ok) {
-                throw new Error("Impossibile caricare il file risultati_v4.json. Controlla il flusso dell'algoritmo.");
+                throw new Error("Impossibile trovare il file risultati_v4.json. Attendi il completamento dell'algoritmo.");
             }
             const data = await response.json();
+            
+            // Verifica di sicurezza sulla struttura dei dati ricevuti
+            if (!data || !data.previsioni || Object.keys(data.previsioni).length === 0) {
+                throw new Error("Il file dei risultati è valido ma non contiene previsioni elaborate.");
+            }
             
             const corpoTabella = document.getElementById('corpo-tabella');
             corpoTabella.innerHTML = ''; 
