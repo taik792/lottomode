@@ -19,7 +19,7 @@
                     46,
                     76
                 ],
-                "score": "173%",
+                "score": "171%",
                 "colore_r1": "gialla",
                 "colore_r2": "rossa"
             },
@@ -29,7 +29,7 @@
                     58,
                     88
                 ],
-                "score": "165%",
+                "score": "166%",
                 "colore_r1": "gialla",
                 "colore_r2": "gialla"
             },
@@ -39,7 +39,7 @@
                     18,
                     78
                 ],
-                "score": "164%",
+                "score": "162%",
                 "colore_r1": "gialla",
                 "colore_r2": "gialla"
             },
@@ -49,7 +49,7 @@
                     4,
                     34
                 ],
-                "score": "160%",
+                "score": "161%",
                 "colore_r1": "gialla",
                 "colore_r2": "gialla"
             },
@@ -81,7 +81,7 @@
                     19,
                     49
                 ],
-                "score": "159%",
+                "score": "154%",
                 "colore_r1": "gialla",
                 "colore_r2": "gialla"
             },
@@ -91,17 +91,17 @@
                     19,
                     79
                 ],
-                "score": "155%",
+                "score": "152%",
                 "colore_r1": "gialla",
                 "colore_r2": "rossa"
             },
             {
                 "ruote": "Napoli - Palermo",
                 "numeri": [
-                    21,
-                    51
+                    51,
+                    81
                 ],
-                "score": "152%",
+                "score": "145%",
                 "colore_r1": "gialla",
                 "colore_r2": "rossa"
             }
@@ -113,29 +113,9 @@
                     28,
                     58
                 ],
-                "score": "149%",
+                "score": "147%",
                 "colore_r1": "gialla",
                 "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Bari - Firenze",
-                "numeri": [
-                    56,
-                    86
-                ],
-                "score": "140%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Napoli - Palermo",
-                "numeri": [
-                    18,
-                    48
-                ],
-                "score": "140%",
-                "colore_r1": "gialla",
-                "colore_r2": "rossa"
             },
             {
                 "ruote": "Bari - Napoli",
@@ -146,6 +126,26 @@
                 "score": "139%",
                 "colore_r1": "gialla",
                 "colore_r2": "gialla"
+            },
+            {
+                "ruote": "Bari - Firenze",
+                "numeri": [
+                    26,
+                    56
+                ],
+                "score": "138%",
+                "colore_r1": "gialla",
+                "colore_r2": "gialla"
+            },
+            {
+                "ruote": "Napoli - Palermo",
+                "numeri": [
+                    48,
+                    78
+                ],
+                "score": "136%",
+                "colore_r1": "gialla",
+                "colore_r2": "rossa"
             }
         ]
     }
