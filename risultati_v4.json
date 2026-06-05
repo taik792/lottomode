@@ -14,24 +14,24 @@
     "tabelloni": {
         "nuovi": [
             {
+                "ruote": "Firenze - Palermo",
+                "numeri": [
+                    46,
+                    76
+                ],
+                "score": "173%",
+                "colore_r1": "gialla",
+                "colore_r2": "rossa"
+            },
+            {
                 "ruote": "Bari - Genova",
                 "numeri": [
                     58,
                     88
                 ],
-                "score": "166%",
+                "score": "165%",
                 "colore_r1": "gialla",
                 "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Firenze - Palermo",
-                "numeri": [
-                    16,
-                    76
-                ],
-                "score": "166%",
-                "colore_r1": "gialla",
-                "colore_r2": "rossa"
             },
             {
                 "ruote": "Cagliari - Genova",
@@ -49,7 +49,7 @@
                     4,
                     34
                 ],
-                "score": "163%",
+                "score": "160%",
                 "colore_r1": "gialla",
                 "colore_r2": "gialla"
             },
@@ -59,7 +59,7 @@
                     6,
                     36
                 ],
-                "score": "160%",
+                "score": "152%",
                 "colore_r1": "gialla",
                 "colore_r2": "rossa"
             }
@@ -71,6 +71,16 @@
                     13,
                     43
                 ],
+                "score": "160%",
+                "colore_r1": "gialla",
+                "colore_r2": "gialla"
+            },
+            {
+                "ruote": "Cagliari - Firenze",
+                "numeri": [
+                    19,
+                    49
+                ],
                 "score": "159%",
                 "colore_r1": "gialla",
                 "colore_r2": "gialla"
@@ -79,29 +89,19 @@
                 "ruote": "Firenze - Torino",
                 "numeri": [
                     19,
-                    49
+                    79
                 ],
-                "score": "153%",
+                "score": "155%",
                 "colore_r1": "gialla",
                 "colore_r2": "rossa"
             },
             {
-                "ruote": "Cagliari - Firenze",
-                "numeri": [
-                    19,
-                    79
-                ],
-                "score": "150%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
                 "ruote": "Napoli - Palermo",
                 "numeri": [
-                    51,
-                    81
+                    21,
+                    51
                 ],
-                "score": "150%",
+                "score": "152%",
                 "colore_r1": "gialla",
                 "colore_r2": "rossa"
             }
@@ -118,30 +118,30 @@
                 "colore_r2": "gialla"
             },
             {
+                "ruote": "Bari - Firenze",
+                "numeri": [
+                    56,
+                    86
+                ],
+                "score": "140%",
+                "colore_r1": "gialla",
+                "colore_r2": "gialla"
+            },
+            {
                 "ruote": "Napoli - Palermo",
                 "numeri": [
-                    48,
-                    78
+                    18,
+                    48
                 ],
-                "score": "143%",
+                "score": "140%",
                 "colore_r1": "gialla",
                 "colore_r2": "rossa"
             },
             {
                 "ruote": "Bari - Napoli",
                 "numeri": [
-                    36,
+                    6,
                     66
-                ],
-                "score": "142%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Bari - Firenze",
-                "numeri": [
-                    56,
-                    86
                 ],
                 "score": "139%",
                 "colore_r1": "gialla",
