@@ -10,78 +10,56 @@ def fuori_90(numero):
     return numero
 
 def calcola_diametrale_decina(numero):
-    """Calcola il diametrale in decina (es: se finisce per 1-5 aggiunge 5, altrimenti sottrae 5)."""
+    """Calcola il diametrale in decina."""
     if numero % 10 <= 5 and numero % 10 != 0:
         return fuori_90(numero + 5)
     else:
         return fuori_90(numero - 5)
 
 def elabora_motore():
-    # Verifica presenza file archivio
     if not os.path.exists('estrazioni.json'):
         print("Errore: Il file 'estrazioni.json' non esiste.")
         return
 
-    # Carica le estrazioni
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    if not archivio:
-        print("Errore: L'archivio delle estrazioni è vuoto.")
+    if not archivio or not isinstance(archivio, dict):
+        print("Errore: Struttura di 'estrazioni.json' non valida (deve essere un dizionario di ruote).")
         return
-
-    # GESTIONE ERRORE DIZIONARIO (KeyError: -1)
-    if isinstance(archivio, dict):
-        # Se l'archivio è un dizionario, ordiniamo le chiavi numericamente
-        # (assume che le chiavi siano ID progressivi o numeri concorso)
-        try:
-            chiavi_ordinate = sorted(archivio.keys(), key=lambda x: int(x))
-        except ValueError:
-            # Se le chiavi non sono convertibili in interi, le ordina come stringhe
-            chiavi_ordinate = sorted(archivio.keys())
-            
-        ultima_chiave = chiavi_ordinate[-1]
-        ultima_estrazione = archivio[ultima_chiave]
-    elif isinstance(archivio, list):
-        # Se è una lista standard, usa il vecchio metodo sicuro
-        ultima_estrazione = archivio[-1]
-    else:
-        print("Errore: Formato del file 'estrazioni.json' non supportato.")
-        return
-
-    data_estrazione = ultima_estrazione.get("data", "Sconosciuta")
-    concorso = ultima_estrazione.get("concorso", "N/D")
-    ruote_dati = ultima_estrazione.get("ruote", {})
 
     risultati_finali = {
         "info_concorso": {
-            "numero": concorso,
-            "data": data_estrazione
+            "numero": "Ultimo",
+            "data": "Recente"
         },
         "previsioni": {}
     }
 
-    # Calcolo Ambata e Ambo per ogni ruota presente
-    for ruota, numeri in ruote_dati.items():
-        if isinstance(numeri, list) and len(numeri) >= 5:
-            # Calcolo Ambata: Somma del 1° e del 5° estratto
-            primo = numeri[0]
-            quinto = numeri[4]
-            ambata = fuori_90(primo + quinto)
+    # Cicla su ogni ruota presente nel dizionario principale
+    for ruota, lista_estrazioni in archivio.items():
+        if isinstance(lista_estrazioni, list) and len(lista_estrazioni) > 0:
+            # Prende l'ultima estrazione della lista (la più recente in fondo)
+            numeri = lista_estrazioni[-1]
             
-            # Calcolo Ambo: Ambata + il suo diametrale in decina
-            abbinamento = calcola_diametrale_decina(ambata)
-            
-            if abbinamento == ambata:
-                abbinamento = fuori_90(ambata + 1)
+            if isinstance(numeri, list) and len(numeri) >= 5:
+                # Calcolo Ambata: Somma del 1° e del 5° estratto
+                primo = numeri[0]
+                quinto = numeri[4]
+                ambata = fuori_90(primo + quinto)
+                
+                # Calcolo Ambo: Ambata + il suo diametrale in decina
+                abbinamento = calcola_diametrale_decina(ambata)
+                
+                if abbinamento == ambata:
+                    abbinamento = fuori_90(ambata + 1)
 
-            risultati_finali["previsioni"][ruota] = {
-                "numeri_estrazione": numeri,
-                "ambata": ambata,
-                "ambo": [ambata, abbinamento]
-            }
+                risultati_finali["previsioni"][ruota] = {
+                    "numeri_estrazione": numeri,
+                    "ambata": ambata,
+                    "ambo": [ambata, abbinamento]
+                }
 
-    # Salva il risultato nel file risultati_v4.json
     with open('risultati_v4.json', 'w', encoding='utf-8') as f:
         json.dump(risultati_finali, f, indent=4, ensure_ascii=False)
     
