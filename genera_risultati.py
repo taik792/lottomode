@@ -13,12 +13,12 @@ def fuori_90(numero):
     except (ValueError, TypeError):
         return 90
 
-def calcola_diametrale_decina(numero):
-    """Calcola il diametrale in decina."""
-    if numero % 10 <= 5 and numero % 10 != 0:
-        return fuori_90(numero + 5)
+def calcola_diametrale_45(numero):
+    """Calcola il diametrale naturale (Distanza 45 perfetta sul cerchio ciclometrico)."""
+    if numero <= 45:
+        return numero + 45
     else:
-        return fuori_90(numero - 5)
+        return numero - 45
 
 def elabora_motore():
     if not os.path.exists('estrazioni.json'):
@@ -28,7 +28,6 @@ def elabora_motore():
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    # Inizializziamo sempre la struttura corretta per evitare errori in index.html
     risultati_finali = {
         "info_concorso": {
             "numero": "Ultimo",
@@ -41,15 +40,12 @@ def elabora_motore():
         print("Errore: Archivio vuoto o formato non valido.")
         return
 
-    # Cicla su tutte le ruote presenti nel file (es. Bari, Cagliari ecc.)
     for ruota, lista_estrazioni in archivio.items():
         if isinstance(lista_estrazioni, list) and len(lista_estrazioni) > 0:
-            # Prende l'ultima estrazione presente (la più recente in fondo)
             numeri_grezzi = lista_estrazioni[-1]
             
             if isinstance(numeri_grezzi, list) and len(numeri_grezzi) >= 5:
                 try:
-                    # Forza la conversione in numeri interi per sicurezza
                     numeri = [int(n) for n in numeri_grezzi[:5]]
                     
                     # Calcolo Ambata: Somma del 1° e del 5° estratto
@@ -57,13 +53,13 @@ def elabora_motore():
                     quinto = numeri[4]
                     ambata = fuori_90(primo + quinto)
                     
-                    # Calcolo Ambo: Ambata + il suo diametrale in decina
-                    abbinamento = calcola_diametrale_decina(ambata)
+                    # NUOVO CALCOLO AMBO: Distanza 45 (Consigliata)
+                    abbinamento = calcola_diametrale_45(ambata)
                     
+                    # Protezione se per assurdo i numeri coincidessero
                     if abbinamento == ambata:
                         abbinamento = fuori_90(ambata + 1)
 
-                    # Salva usando il nome esatto della ruota (mantenendo la maiuscola)
                     risultati_finali["previsioni"][ruota] = {
                         "numeri_estrazione": numeri,
                         "ambata": ambata,
@@ -76,7 +72,7 @@ def elabora_motore():
     with open('risultati_v4.json', 'w', encoding='utf-8') as f:
         json.dump(risultati_finali, f, indent=4, ensure_ascii=False)
     
-    print("Elaborazione completata! File 'risultati_v4.json' salvato correttamente.")
+    print("Elaborazione completata con successo con Distanza 45! File 'risultati_v4.json' salvato.")
 
 if __name__ == "__main__":
     elabora_motore()
