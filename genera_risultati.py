@@ -30,8 +30,25 @@ def elabora_motore():
         print("Errore: L'archivio delle estrazioni è vuoto.")
         return
 
-    # Prende l'ultima estrazione (la più recente, supponendo sia l'ultima della lista)
-    ultima_estrazione = archivio[-1]
+    # GESTIONE ERRORE DIZIONARIO (KeyError: -1)
+    if isinstance(archivio, dict):
+        # Se l'archivio è un dizionario, ordiniamo le chiavi numericamente
+        # (assume che le chiavi siano ID progressivi o numeri concorso)
+        try:
+            chiavi_ordinate = sorted(archivio.keys(), key=lambda x: int(x))
+        except ValueError:
+            # Se le chiavi non sono convertibili in interi, le ordina come stringhe
+            chiavi_ordinate = sorted(archivio.keys())
+            
+        ultima_chiave = chiavi_ordinate[-1]
+        ultima_estrazione = archivio[ultima_chiave]
+    elif isinstance(archivio, list):
+        # Se è una lista standard, usa il vecchio metodo sicuro
+        ultima_estrazione = archivio[-1]
+    else:
+        print("Errore: Formato del file 'estrazioni.json' non supportato.")
+        return
+
     data_estrazione = ultima_estrazione.get("data", "Sconosciuta")
     concorso = ultima_estrazione.get("concorso", "N/D")
     ruote_dati = ultima_estrazione.get("ruote", {})
@@ -46,7 +63,7 @@ def elabora_motore():
 
     # Calcolo Ambata e Ambo per ogni ruota presente
     for ruota, numeri in ruote_dati.items():
-        if len(numeri) >= 5:
+        if isinstance(numeri, list) and len(numeri) >= 5:
             # Calcolo Ambata: Somma del 1° e del 5° estratto
             primo = numeri[0]
             quinto = numeri[4]
@@ -55,7 +72,6 @@ def elabora_motore():
             # Calcolo Ambo: Ambata + il suo diametrale in decina
             abbinamento = calcola_diametrale_decina(ambata)
             
-            # Se l'abbinamento è uguale all'ambata, cambiamo logica temporaneamente (+1)
             if abbinamento == ambata:
                 abbinamento = fuori_90(ambata + 1)
 
