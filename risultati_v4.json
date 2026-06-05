@@ -1,142 +1,148 @@
 {
-    "mappa_calore": {
-        "Bari": "gialla",
-        "Cagliari": "gialla",
-        "Firenze": "gialla",
-        "Genova": "gialla",
-        "Milano": "grigia",
-        "Napoli": "gialla",
-        "Palermo": "rossa",
-        "Roma": "rossa",
-        "Torino": "rossa",
-        "Venezia": "gialla"
+    "info_concorso": {
+        "numero": "Ultimo",
+        "data": "Recente"
     },
-    "tabelloni": {
-        "nuovi": [
-            {
-                "ruote": "Bari - Genova",
-                "numeri": [
-                    28,
-                    58
-                ],
-                "score": "165%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Firenze - Palermo",
-                "numeri": [
-                    46,
-                    76
-                ],
-                "score": "162%",
-                "colore_r1": "gialla",
-                "colore_r2": "rossa"
-            },
-            {
-                "ruote": "Genova - Napoli",
-                "numeri": [
-                    4,
-                    34
-                ],
-                "score": "161%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Cagliari - Genova, Napoli",
-                "numeri": [
-                    48,
-                    78
-                ],
-                "score": "161%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Bari - Palermo",
-                "numeri": [
-                    6,
-                    36
-                ],
-                "score": "152%",
-                "colore_r1": "gialla",
-                "colore_r2": "rossa"
-            }
-        ],
-        "colpo2": [
-            {
-                "ruote": "Bari - Cagliari",
-                "numeri": [
-                    13,
-                    43
-                ],
-                "score": "160%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Firenze - Torino",
-                "numeri": [
-                    19,
-                    79
-                ],
-                "score": "153%",
-                "colore_r1": "gialla",
-                "colore_r2": "rossa"
-            },
-            {
-                "ruote": "Cagliari - Firenze",
-                "numeri": [
-                    19,
-                    49
-                ],
-                "score": "152%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Napoli - Palermo",
-                "numeri": [
-                    51,
-                    81
-                ],
-                "score": "145%",
-                "colore_r1": "gialla",
-                "colore_r2": "rossa"
-            }
-        ],
-        "colpo3": [
-            {
-                "ruote": "Cagliari - Genova",
-                "numeri": [
-                    28,
-                    88
-                ],
-                "score": "140%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Bari - Napoli",
-                "numeri": [
-                    6,
-                    66
-                ],
-                "score": "139%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            },
-            {
-                "ruote": "Bari - Firenze",
-                "numeri": [
-                    26,
-                    56
-                ],
-                "score": "138%",
-                "colore_r1": "gialla",
-                "colore_r2": "gialla"
-            }
-        ]
+    "previsioni": {
+        "Bari": {
+            "numeri_estrazione": [
+                78,
+                89,
+                73,
+                50,
+                28
+            ],
+            "ambata": 16,
+            "ambo": [
+                16,
+                11
+            ]
+        },
+        "Cagliari": {
+            "numeri_estrazione": [
+                2,
+                59,
+                30,
+                60,
+                9
+            ],
+            "ambata": 11,
+            "ambo": [
+                11,
+                16
+            ]
+        },
+        "Firenze": {
+            "numeri_estrazione": [
+                62,
+                56,
+                28,
+                72,
+                23
+            ],
+            "ambata": 85,
+            "ambo": [
+                85,
+                90
+            ]
+        },
+        "Genova": {
+            "numeri_estrazione": [
+                20,
+                14,
+                19,
+                32,
+                24
+            ],
+            "ambata": 44,
+            "ambo": [
+                44,
+                49
+            ]
+        },
+        "Milano": {
+            "numeri_estrazione": [
+                25,
+                30,
+                78,
+                72,
+                40
+            ],
+            "ambata": 65,
+            "ambo": [
+                65,
+                70
+            ]
+        },
+        "Napoli": {
+            "numeri_estrazione": [
+                33,
+                69,
+                25,
+                17,
+                26
+            ],
+            "ambata": 59,
+            "ambo": [
+                59,
+                54
+            ]
+        },
+        "Palermo": {
+            "numeri_estrazione": [
+                63,
+                24,
+                82,
+                1,
+                8
+            ],
+            "ambata": 71,
+            "ambo": [
+                71,
+                76
+            ]
+        },
+        "Roma": {
+            "numeri_estrazione": [
+                21,
+                17,
+                23,
+                71,
+                31
+            ],
+            "ambata": 52,
+            "ambo": [
+                52,
+                57
+            ]
+        },
+        "Torino": {
+            "numeri_estrazione": [
+                2,
+                76,
+                71,
+                58,
+                72
+            ],
+            "ambata": 74,
+            "ambo": [
+                74,
+                79
+            ]
+        },
+        "Venezia": {
+            "numeri_estrazione": [
+                58,
+                48,
+                51,
+                78,
+                67
+            ],
+            "ambata": 35,
+            "ambo": [
+                35,
+                40
+            ]
+        }
     }
 }
