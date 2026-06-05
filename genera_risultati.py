@@ -34,9 +34,9 @@ def analizza_statistiche_ruote(archivio):
         ritardi = {n: 0 for n in range(1, 91)}
         frequenza_recente = {n: 0 for n in range(1, 91)}
         
-        ultime_18 = estrazioni_ruota[-18:] if len(estrazioni_ruota) >= 18 else estrazioni_ruota
+        ultime_10 = estrazioni_ruota[-10:] if len(estrazioni_ruota) >= 10 else estrazioni_ruota
         
-        for estrazione in ultime_18:
+        for estrazione in ultime_10:
             if isinstance(estrazione, list):
                 for num in estrazione[:5]:
                     if 1 <= int(num) <= 90:
