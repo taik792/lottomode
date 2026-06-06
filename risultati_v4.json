@@ -1,7 +1,7 @@
 {
     "info_concorso": {
-        "numero": "Ultimo",
-        "data": "Recente"
+        "numero": "Metodo Statistico",
+        "data": "Spia + Vertibili"
     },
     "previsioni": {
         "Bari": {
@@ -12,10 +12,11 @@
                 76,
                 86
             ],
-            "ambata": 75,
+            "spia": 79,
+            "ambata": 30,
             "ambo": [
-                75,
-                30
+                30,
+                3
             ]
         },
         "Firenze": {
@@ -26,10 +27,11 @@
                 72,
                 4
             ],
-            "ambata": 74,
+            "spia": 70,
+            "ambata": 10,
             "ambo": [
-                74,
-                29
+                10,
+                1
             ]
         },
         "Milano": {
@@ -40,10 +42,11 @@
                 88,
                 83
             ],
-            "ambata": 33,
+            "spia": 40,
+            "ambata": 2,
             "ambo": [
-                33,
-                78
+                2,
+                20
             ]
         },
         "Napoli": {
@@ -54,10 +57,11 @@
                 22,
                 14
             ],
-            "ambata": 51,
+            "spia": 37,
+            "ambata": 64,
             "ambo": [
-                51,
-                6
+                64,
+                46
             ]
         },
         "Palermo": {
@@ -68,10 +72,11 @@
                 44,
                 26
             ],
-            "ambata": 57,
+            "spia": 31,
+            "ambata": 76,
             "ambo": [
-                57,
-                12
+                76,
+                67
             ]
         },
         "Roma": {
@@ -82,10 +87,11 @@
                 41,
                 23
             ],
-            "ambata": 5,
+            "spia": 72,
+            "ambata": 82,
             "ambo": [
-                5,
-                50
+                82,
+                28
             ]
         },
         "Torino": {
@@ -96,10 +102,11 @@
                 6,
                 86
             ],
-            "ambata": 61,
+            "spia": 65,
+            "ambata": 75,
             "ambo": [
-                61,
-                16
+                75,
+                57
             ]
         },
         "Venezia": {
@@ -110,10 +117,11 @@
                 49,
                 71
             ],
-            "ambata": 15,
+            "spia": 34,
+            "ambata": 26,
             "ambo": [
-                15,
-                60
+                26,
+                62
             ]
         },
         "Cagliari": {
@@ -124,10 +132,11 @@
                 84,
                 37
             ],
-            "ambata": 53,
+            "spia": 16,
+            "ambata": 15,
             "ambo": [
-                53,
-                8
+                15,
+                51
             ]
         },
         "Genova": {
@@ -138,10 +147,11 @@
                 79,
                 55
             ],
-            "ambata": 3,
+            "spia": 38,
+            "ambata": 30,
             "ambo": [
-                3,
-                48
+                30,
+                3
             ]
         }
     }
