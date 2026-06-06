@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Bot V4 - Previsioni</title>
+    <title>Lotto Bot V4 - Spie & Vertibili</title>
     <style>
         :root {
-            --primary: #1e293b;
-            --accent: #d97706;
-            --bg: #f8fafc;
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --bg: #f1f5f9;
             --card-bg: #ffffff;
-            --text: #334155;
+            --text: #1e293b;
             --ambata-bg: #fee2e2;
             --ambata-txt: #dc2626;
             --ambo-bg: #dcfce7;
@@ -18,7 +18,7 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
@@ -42,18 +42,17 @@
 
         header h1 {
             margin: 0 0 8px 0;
-            font-size: 1.6rem;
-            letter-spacing: 0.5px;
+            font-size: 1.5rem;
             color: #f8fafc;
         }
 
         .info-concorso {
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: #38bdf8;
             margin: 0;
+            font-weight: 600;
         }
 
-        /* Griglia delle schede ruota */
         .ruote-container {
             display: flex;
             flex-direction: column;
@@ -64,7 +63,7 @@
             background: var(--card-bg);
             border-radius: 14px;
             padding: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border-left: 5px solid var(--accent);
         }
 
@@ -78,19 +77,24 @@
         }
 
         .ruota-title {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: var(--primary);
             text-transform: uppercase;
         }
 
-        /* Contenitore palline numeri */
+        .spia-badge {
+            background-color: #fef3c7;
+            color: #d97706;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
         .palline-conferite {
             display: flex;
             gap: 6px;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            padding-bottom: 4px;
         }
 
         .pallina {
@@ -104,11 +108,8 @@
             justify-content: center;
             font-weight: 600;
             font-size: 0.95rem;
-            flex-shrink: 0;
-            box-shadow: inset 0 -2px 0px rgba(0,0,0,0.1);
         }
 
-        /* Blocco Previsioni */
         .previsione-box {
             display: flex;
             gap: 12px;
@@ -135,14 +136,13 @@
         .prev-label {
             font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             margin-bottom: 4px;
             font-weight: 700;
             opacity: 0.8;
         }
 
         .prev-value {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 800;
             letter-spacing: 1px;
         }
@@ -150,7 +150,6 @@
         .error-message {
             background: #fef2f2;
             color: #991b1b;
-            border: 1px solid #fee2e2;
             padding: 16px;
             border-radius: 12px;
             text-align: center;
@@ -162,14 +161,11 @@
 
 <div class="container">
     <header>
-        <h1>Lotto Bot V4</h1>
-        <p id="info-concorso" class="info-concorso">Calcolo ultime estrazioni in corso...</p>
+        <h1>Lotto Intelligence V4</h1>
+        <p id="info-concorso" class="info-concorso">Analisi Frequenze e Numeri Spia</p>
     </header>
 
-    <div id="ruote-list" class="ruote-container">
-        <!-- Le schede generate finiranno qui -->
-    </div>
-
+    <div id="ruote-list" class="ruote-container"></div>
     <div id="errore" class="error-message" style="display: none;"></div>
 </div>
 
@@ -177,26 +173,20 @@
     async function caricaRisultati() {
         try {
             const response = await fetch('risultati_v4.json?t=' + new Date().getTime());
-            if (!response.ok) {
-                throw new Error("File dei dati non trovato. Attendi l'elaborazione del bot.");
-            }
+            if (!response.ok) throw new Error("Attendi il caricamento del file dei risultati.");
             const data = await response.json();
             
             if (!data || !data.previsioni || Object.keys(data.previsioni).length === 0) {
-                throw new Error("Nessun dato previsionale disponibile.");
+                throw new Error("Nessun dato elaborato.");
             }
-            
-            document.getElementById('info-concorso').textContent = "Previsioni ricavate dall'ultima estrazione in archivio";
             
             const container = document.getElementById('ruote-list');
             container.innerHTML = ''; 
 
             for (const [ruota, info] of Object.entries(data.previsioni)) {
-                // Crea la scheda della ruota
                 const card = document.createElement('div');
                 card.className = 'card-ruota';
 
-                // Genera le palline dei numeri estratti
                 const pallineHTML = info.numeri_estrazione
                     .map(num => `<div class="pallina">${num}</div>`)
                     .join('');
@@ -204,17 +194,16 @@
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="ruota-title">${ruota}</span>
+                        <span class="spia-badge">Spia Rilevata: ${info.spia}</span>
                     </div>
-                    <div class="palline-conferite">
-                        ${pallineHTML}
-                    </div>
+                    <div class="palline-conferite">${pallineHTML}</div>
                     <div class="previsione-box">
                         <div class="prev-item ambata">
-                            <div class="prev-label">Ambata</div>
+                            <div class="prev-label">Ambata Statistica</div>
                             <div class="prev-value">${info.ambata}</div>
                         </div>
                         <div class="prev-item ambo">
-                            <div class="prev-label">Ambo consigliato</div>
+                            <div class="prev-label">Ambo Vertibile</div>
                             <div class="prev-value">${info.ambo.join(' - ')}</div>
                         </div>
                     </div>
