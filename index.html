@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Bot V4 - Spie & Vertibili</title>
+    <title>Lotto Intelligence V4 - Ruota Consigliata</title>
     <style>
         :root {
             --primary: #0f172a;
@@ -15,6 +15,8 @@
             --ambata-txt: #dc2626;
             --ambo-bg: #dcfce7;
             --ambo-txt: #16a34a;
+            --gold: #fef08a;
+            --gold-border: #eab308;
         }
 
         body {
@@ -40,24 +42,10 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        header h1 {
-            margin: 0 0 8px 0;
-            font-size: 1.5rem;
-            color: #f8fafc;
-        }
+        header h1 { margin: 0 0 8px 0; font-size: 1.5rem; color: #f8fafc; }
+        .info-concorso { font-size: 0.9rem; color: #38bdf8; margin: 0; font-weight: 600; }
 
-        .info-concorso {
-            font-size: 0.9rem;
-            color: #38bdf8;
-            margin: 0;
-            font-weight: 600;
-        }
-
-        .ruote-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        .ruote-container { display: flex; flex-direction: column; gap: 16px; }
 
         .card-ruota {
             background: var(--card-bg);
@@ -65,6 +53,17 @@
             padding: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border-left: 5px solid var(--accent);
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        /* Stile speciale per la ruota consigliata */
+        .card-ruota.top-consigliata {
+            background-color: #fffbeb;
+            border: 2px solid var(--gold-border);
+            border-left: 8px solid var(--gold-border);
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(234, 179, 8, 0.2);
         }
 
         .card-header {
@@ -76,85 +75,39 @@
             padding-bottom: 8px;
         }
 
-        .ruota-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-transform: uppercase;
-        }
-
-        .spia-badge {
-            background-color: #fef3c7;
-            color: #d97706;
-            font-size: 0.8rem;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: 700;
-        }
-
-        .palline-conferite {
-            display: flex;
-            gap: 6px;
-        }
-
-        .pallina {
-            width: 34px;
-            height: 34px;
-            background: #e2e8f0;
-            color: #1e293b;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .previsione-box {
-            display: flex;
-            gap: 12px;
-            margin-top: 14px;
-        }
-
-        .prev-item {
-            flex: 1;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .prev-item.ambata {
-            background-color: var(--ambata-bg);
-            color: var(--ambata-txt);
-        }
-
-        .prev-item.ambo {
-            background-color: var(--ambo-bg);
-            color: var(--ambo-txt);
-        }
-
-        .prev-label {
+        .ruota-title { font-size: 1.15rem; font-weight: 700; color: var(--primary); text-transform: uppercase; }
+        .spia-badge { background-color: #e2e8f0; color: #475569; font-size: 0.8rem; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
+        
+        .top-badge {
+            background-color: var(--gold-border);
+            color: white;
             font-size: 0.75rem;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-            font-weight: 700;
-            opacity: 0.8;
-        }
-
-        .prev-value {
-            font-size: 1.25rem;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
-        .error-message {
-            background: #fef2f2;
-            color: #991b1b;
-            padding: 16px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
+        .palline-conferite { display: flex; gap: 6px; }
+        .pallina {
+            width: 34px; height: 34px; background: #e2e8f0; color: #1e293b;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 600; font-size: 0.95rem;
         }
+
+        .stat-box {
+            margin-top: 8px; font-size: 0.8rem; color: #64748b; font-weight: 500;
+        }
+        .stat-box strong { color: var(--primary); }
+
+        .previsione-box { display: flex; gap: 12px; margin-top: 12px; }
+        .prev-item { flex: 1; padding: 10px; border-radius: 10px; text-align: center; }
+        .prev-item.ambata { background-color: var(--ambata-bg); color: var(--ambata-txt); }
+        .prev-item.ambo { background-color: var(--ambo-bg); color: var(--ambo-txt); }
+        .prev-label { font-size: 0.75rem; text-transform: uppercase; margin-bottom: 4px; font-weight: 700; opacity: 0.8; }
+        .prev-value { font-size: 1.25rem; font-weight: 800; letter-spacing: 1px; }
+
+        .error-message { background: #fef2f2; color: #991b1b; padding: 16px; border-radius: 12px; text-align: center; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -162,7 +115,7 @@
 <div class="container">
     <header>
         <h1>Lotto Intelligence V4</h1>
-        <p id="info-concorso" class="info-concorso">Analisi Frequenze e Numeri Spia</p>
+        <p id="info-concorso" class="info-concorso">Scelta Algoritmica della Ruota Migliore</p>
     </header>
 
     <div id="ruote-list" class="ruote-container"></div>
@@ -173,37 +126,49 @@
     async function caricaRisultati() {
         try {
             const response = await fetch('risultati_v4.json?t=' + new Date().getTime());
-            if (!response.ok) throw new Error("Attendi il caricamento del file dei risultati.");
+            if (!response.ok) throw new Error("Attendi il ricalcolo del motore.");
             const data = await response.json();
             
-            if (!data || !data.previsioni || Object.keys(data.previsioni).length === 0) {
-                throw new Error("Nessun dato elaborato.");
-            }
+            if (!data || !data.previsioni || Object.keys(data.previsioni).length === 0) throw new Error("Nessun dato.");
             
             const container = document.getElementById('ruote-list');
             container.innerHTML = ''; 
 
-            for (const [ruota, info] of Object.entries(data.previsioni)) {
+            // Ordiniamo le ruote mettendo quella consigliata in cima alla lista
+            const ruoteOrdinate = Object.entries(data.previsioni).sort((a, b) => {
+                return (b[1].consigliata ? 1 : 0) - (a[1].consigliata ? 1 : 0);
+            });
+
+            for (const [ruota, info] of ruoteOrdinate) {
                 const card = document.createElement('div');
-                card.className = 'card-ruota';
+                card.className = `card-ruota ${info.consigliata ? 'top-consigliata' : ''}`;
 
                 const pallineHTML = info.numeri_estrazione
                     .map(num => `<div class="pallina">${num}</div>`)
                     .join('');
 
+                const badgeHeader = info.consigliata 
+                    ? `<span class="top-badge">🔥 RUOTA TOP CONSIGLIATA</span>` 
+                    : `<span class="spia-badge">Spia: ${info.spia}</span>`;
+
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="ruota-title">${ruota}</span>
-                        <span class="spia-badge">Spia Rilevata: ${info.spia}</span>
+                        ${badgeHeader}
                     </div>
                     <div class="palline-conferite">${pallineHTML}</div>
+                    
+                    <div class="stat-box">
+                        Sfidamento storico: l'ambata è uscita in <strong>${info.esiti_positivi}</strong> casi su <strong>${info.casi_storici}</strong> presenze della spia (<strong>${info.percentuale}%</strong> di successo).
+                    </div>
+
                     <div class="previsione-box">
                         <div class="prev-item ambata">
-                            <div class="prev-label">Ambata Statistica</div>
+                            <div class="prev-label">Ambata</div>
                             <div class="prev-value">${info.ambata}</div>
                         </div>
                         <div class="prev-item ambo">
-                            <div class="prev-label">Ambo Vertibile</div>
+                            <div class="prev-label">Ambo consigliato</div>
                             <div class="prev-value">${info.ambo.join(' - ')}</div>
                         </div>
                     </div>
