@@ -1,7 +1,7 @@
 {
     "info_concorso": {
-        "numero": "Metodo Statistico",
-        "data": "Spia + Vertibili"
+        "numero": "Statistica Avanzata",
+        "data": "Frequenze Spia"
     },
     "previsioni": {
         "Bari": {
@@ -17,7 +17,11 @@
             "ambo": [
                 30,
                 3
-            ]
+            ],
+            "casi_storici": 90,
+            "esiti_positivi": 59,
+            "percentuale": 65.6,
+            "consigliata": false
         },
         "Firenze": {
             "numeri_estrazione": [
@@ -32,7 +36,11 @@
             "ambo": [
                 10,
                 1
-            ]
+            ],
+            "casi_storici": 91,
+            "esiti_positivi": 66,
+            "percentuale": 72.5,
+            "consigliata": true
         },
         "Milano": {
             "numeri_estrazione": [
@@ -47,7 +55,11 @@
             "ambo": [
                 2,
                 20
-            ]
+            ],
+            "casi_storici": 84,
+            "esiti_positivi": 57,
+            "percentuale": 67.9,
+            "consigliata": false
         },
         "Napoli": {
             "numeri_estrazione": [
@@ -62,7 +74,11 @@
             "ambo": [
                 64,
                 46
-            ]
+            ],
+            "casi_storici": 73,
+            "esiti_positivi": 45,
+            "percentuale": 61.6,
+            "consigliata": false
         },
         "Palermo": {
             "numeri_estrazione": [
@@ -77,7 +93,11 @@
             "ambo": [
                 76,
                 67
-            ]
+            ],
+            "casi_storici": 67,
+            "esiti_positivi": 39,
+            "percentuale": 58.2,
+            "consigliata": false
         },
         "Roma": {
             "numeri_estrazione": [
@@ -92,7 +112,11 @@
             "ambo": [
                 82,
                 28
-            ]
+            ],
+            "casi_storici": 88,
+            "esiti_positivi": 59,
+            "percentuale": 67.0,
+            "consigliata": false
         },
         "Torino": {
             "numeri_estrazione": [
@@ -107,7 +131,11 @@
             "ambo": [
                 75,
                 57
-            ]
+            ],
+            "casi_storici": 67,
+            "esiti_positivi": 42,
+            "percentuale": 62.7,
+            "consigliata": false
         },
         "Venezia": {
             "numeri_estrazione": [
@@ -122,7 +150,11 @@
             "ambo": [
                 26,
                 62
-            ]
+            ],
+            "casi_storici": 79,
+            "esiti_positivi": 46,
+            "percentuale": 58.2,
+            "consigliata": false
         },
         "Cagliari": {
             "numeri_estrazione": [
@@ -137,7 +169,11 @@
             "ambo": [
                 15,
                 51
-            ]
+            ],
+            "casi_storici": 67,
+            "esiti_positivi": 44,
+            "percentuale": 65.7,
+            "consigliata": false
         },
         "Genova": {
             "numeri_estrazione": [
@@ -152,7 +188,11 @@
             "ambo": [
                 30,
                 3
-            ]
+            ],
+            "casi_storici": 81,
+            "esiti_positivi": 50,
+            "percentuale": 61.7,
+            "consigliata": false
         }
     }
 }
