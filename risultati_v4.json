@@ -6,192 +6,192 @@
     "previsioni": {
         "Bari": {
             "numeri_estrazione": [
-                53,
-                23,
+                45,
                 77,
-                51,
-                86
+                23,
+                71,
+                83
             ],
-            "spia": 53,
-            "ambata": 59,
+            "spia": 45,
+            "ambata": 48,
             "ambo": [
-                59,
-                95
+                48,
+                84
             ],
-            "casi_storici": 79,
-            "esiti_positivi": 50,
-            "percentuale": 63.3,
+            "casi_storici": 69,
+            "esiti_positivi": 43,
+            "percentuale": 62.3,
             "consigliata": false
         },
         "Firenze": {
             "numeri_estrazione": [
-                64,
-                3,
-                85,
-                23,
-                69
+                40,
+                37,
+                50,
+                42,
+                86
             ],
-            "spia": 64,
-            "ambata": 74,
+            "spia": 40,
+            "ambata": 31,
             "ambo": [
-                74,
-                47
+                31,
+                13
             ],
-            "casi_storici": 79,
+            "casi_storici": 81,
             "esiti_positivi": 50,
-            "percentuale": 63.3,
+            "percentuale": 61.7,
             "consigliata": false
         },
         "Milano": {
             "numeri_estrazione": [
-                42,
-                87,
-                40,
-                53,
-                50
+                59,
+                56,
+                79,
+                37,
+                64
             ],
-            "spia": 42,
-            "ambata": 1,
+            "spia": 59,
+            "ambata": 69,
             "ambo": [
-                1,
-                10
+                69,
+                96
             ],
-            "casi_storici": 60,
-            "esiti_positivi": 37,
-            "percentuale": 61.7,
+            "casi_storici": 76,
+            "esiti_positivi": 43,
+            "percentuale": 56.6,
             "consigliata": false
         },
         "Napoli": {
             "numeri_estrazione": [
-                10,
-                59,
-                86,
-                90,
-                33
+                8,
+                9,
+                43,
+                71,
+                28
             ],
-            "spia": 10,
-            "ambata": 7,
-            "ambo": [
-                7,
-                70
-            ],
-            "casi_storici": 72,
-            "esiti_positivi": 48,
-            "percentuale": 66.7,
-            "consigliata": false
-        },
-        "Palermo": {
-            "numeri_estrazione": [
-                76,
-                59,
-                28,
-                24,
-                6
-            ],
-            "spia": 76,
+            "spia": 8,
             "ambata": 52,
             "ambo": [
                 52,
                 25
             ],
-            "casi_storici": 89,
-            "esiti_positivi": 52,
-            "percentuale": 58.4,
+            "casi_storici": 80,
+            "esiti_positivi": 55,
+            "percentuale": 68.8,
+            "consigliata": true
+        },
+        "Palermo": {
+            "numeri_estrazione": [
+                46,
+                79,
+                55,
+                1,
+                67
+            ],
+            "spia": 46,
+            "ambata": 76,
+            "ambo": [
+                76,
+                67
+            ],
+            "casi_storici": 73,
+            "esiti_positivi": 48,
+            "percentuale": 65.8,
             "consigliata": false
         },
         "Roma": {
             "numeri_estrazione": [
-                76,
-                55,
-                69,
-                15,
-                74
+                87,
+                71,
+                59,
+                1,
+                89
             ],
-            "spia": 76,
-            "ambata": 53,
+            "spia": 87,
+            "ambata": 20,
             "ambo": [
-                53,
-                35
+                20,
+                2
             ],
             "casi_storici": 79,
-            "esiti_positivi": 47,
-            "percentuale": 59.5,
+            "esiti_positivi": 42,
+            "percentuale": 53.2,
             "consigliata": false
         },
         "Torino": {
             "numeri_estrazione": [
-                24,
-                79,
-                44,
-                62,
-                64
+                51,
+                38,
+                48,
+                22,
+                31
             ],
-            "spia": 24,
+            "spia": 51,
+            "ambata": 54,
+            "ambo": [
+                54,
+                45
+            ],
+            "casi_storici": 81,
+            "esiti_positivi": 54,
+            "percentuale": 66.7,
+            "consigliata": false
+        },
+        "Venezia": {
+            "numeri_estrazione": [
+                76,
+                56,
+                16,
+                52,
+                33
+            ],
+            "spia": 76,
+            "ambata": 34,
+            "ambo": [
+                34,
+                43
+            ],
+            "casi_storici": 78,
+            "esiti_positivi": 47,
+            "percentuale": 60.3,
+            "consigliata": false
+        },
+        "Cagliari": {
+            "numeri_estrazione": [
+                32,
+                55,
+                16,
+                31,
+                22
+            ],
+            "spia": 32,
+            "ambata": 60,
+            "ambo": [
+                60,
+                6
+            ],
+            "casi_storici": 70,
+            "esiti_positivi": 41,
+            "percentuale": 58.6,
+            "consigliata": false
+        },
+        "Genova": {
+            "numeri_estrazione": [
+                65,
+                69,
+                52,
+                36,
+                27
+            ],
+            "spia": 65,
             "ambata": 84,
             "ambo": [
                 84,
                 48
             ],
-            "casi_storici": 95,
-            "esiti_positivi": 66,
-            "percentuale": 69.5,
-            "consigliata": true
-        },
-        "Venezia": {
-            "numeri_estrazione": [
-                89,
-                3,
-                23,
-                37,
-                10
-            ],
-            "spia": 89,
-            "ambata": 10,
-            "ambo": [
-                10,
-                1
-            ],
-            "casi_storici": 92,
-            "esiti_positivi": 54,
-            "percentuale": 58.7,
-            "consigliata": false
-        },
-        "Cagliari": {
-            "numeri_estrazione": [
-                56,
-                76,
-                85,
-                17,
-                83
-            ],
-            "spia": 56,
-            "ambata": 90,
-            "ambo": [
-                90,
-                9
-            ],
-            "casi_storici": 90,
-            "esiti_positivi": 55,
-            "percentuale": 61.1,
-            "consigliata": false
-        },
-        "Genova": {
-            "numeri_estrazione": [
-                56,
-                81,
-                32,
-                38,
-                28
-            ],
-            "spia": 56,
-            "ambata": 86,
-            "ambo": [
-                86,
-                68
-            ],
-            "casi_storici": 82,
-            "esiti_positivi": 49,
-            "percentuale": 59.8,
+            "casi_storici": 62,
+            "esiti_positivi": 42,
+            "percentuale": 67.7,
             "consigliata": false
         }
     }
