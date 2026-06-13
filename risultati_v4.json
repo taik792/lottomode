@@ -1,256 +1,256 @@
 {
     "info_concorso": {
-        "numero": "Algoritmo Sommativo V6",
-        "data": "Nuova Strategia Matematica"
+        "numero": "Ciclometria Spaziale V7",
+        "data": "Armonie di Chiusura"
     },
     "previsioni": {
         "Bari": {
             "numeri_estrazione": [
-                45,
-                77,
-                23,
-                71,
-                83
+                25,
+                62,
+                86,
+                19,
+                37
             ],
-            "spia": 45,
-            "ambata": 52,
+            "tipo_calcolo": "Chiusura Diagonale",
+            "ambata": 70,
             "ambo": [
-                52,
-                39
+                70,
+                66
             ],
             "ambetti": [
                 [
-                    52,
-                    40
+                    70,
+                    67
                 ],
                 [
-                    52,
-                    38
+                    70,
+                    65
                 ]
             ]
         },
         "Firenze": {
             "numeri_estrazione": [
-                40,
-                37,
-                50,
-                42,
-                86
+                84,
+                34,
+                83,
+                8,
+                26
             ],
-            "spia": 40,
-            "ambata": 47,
+            "tipo_calcolo": "Asse Firenze-Genova (Pos.4)",
+            "ambata": 53,
             "ambo": [
-                47,
-                44
+                53,
+                54
             ],
             "ambetti": [
                 [
-                    47,
-                    45
+                    53,
+                    55
                 ],
                 [
-                    47,
-                    43
+                    53,
+                    53
                 ]
             ]
         },
         "Milano": {
             "numeri_estrazione": [
-                59,
-                56,
-                79,
-                37,
-                64
+                75,
+                70,
+                86,
+                51,
+                35
             ],
-            "spia": 59,
-            "ambata": 66,
+            "tipo_calcolo": "Asse Milano-Roma (Pos.5)",
+            "ambata": 80,
             "ambo": [
-                66,
-                25
+                80,
+                81
             ],
             "ambetti": [
                 [
-                    66,
-                    26
+                    80,
+                    82
                 ],
                 [
-                    66,
-                    24
+                    80,
+                    80
                 ]
             ]
         },
         "Napoli": {
             "numeri_estrazione": [
-                8,
-                9,
-                43,
-                71,
-                28
+                46,
+                48,
+                68,
+                37,
+                19
             ],
-            "spia": 8,
-            "ambata": 15,
+            "tipo_calcolo": "Asse Napoli-Palermo (Pos.1)",
+            "ambata": 76,
             "ambo": [
-                15,
-                76
+                76,
+                17
             ],
             "ambetti": [
                 [
-                    15,
-                    77
+                    76,
+                    18
                 ],
                 [
-                    15,
-                    75
+                    76,
+                    16
                 ]
             ]
         },
         "Palermo": {
             "numeri_estrazione": [
-                46,
-                79,
-                55,
-                1,
-                67
+                16,
+                39,
+                87,
+                84,
+                74
             ],
-            "spia": 46,
-            "ambata": 53,
+            "tipo_calcolo": "Asse Palermo-Roma (Pos.4)",
+            "ambata": 24,
             "ambo": [
-                53,
-                38
+                24,
+                55
             ],
             "ambetti": [
                 [
-                    53,
-                    39
+                    24,
+                    56
                 ],
                 [
-                    53,
-                    37
+                    24,
+                    54
                 ]
             ]
         },
         "Roma": {
             "numeri_estrazione": [
-                87,
-                71,
-                59,
-                1,
-                89
+                29,
+                42,
+                65,
+                54,
+                80
             ],
-            "spia": 87,
-            "ambata": 4,
+            "tipo_calcolo": "Asse Palermo-Roma (Pos.4)",
+            "ambata": 24,
             "ambo": [
-                4,
-                87
+                24,
+                55
             ],
             "ambetti": [
                 [
-                    4,
-                    88
+                    24,
+                    56
                 ],
                 [
-                    4,
-                    86
+                    24,
+                    54
                 ]
             ]
         },
         "Torino": {
             "numeri_estrazione": [
-                51,
-                38,
-                48,
-                22,
-                31
+                77,
+                67,
+                68,
+                57,
+                45
             ],
-            "spia": 51,
-            "ambata": 58,
+            "tipo_calcolo": "Chiusura Diagonale",
+            "ambata": 32,
             "ambo": [
-                58,
-                33
+                32,
+                14
             ],
             "ambetti": [
                 [
-                    58,
-                    34
+                    32,
+                    15
                 ],
                 [
-                    58,
-                    32
+                    32,
+                    13
                 ]
             ]
         },
         "Venezia": {
             "numeri_estrazione": [
-                76,
-                56,
-                16,
-                52,
-                33
+                5,
+                82,
+                85,
+                42,
+                19
             ],
-            "spia": 76,
-            "ambata": 83,
+            "tipo_calcolo": "Chiusura Diagonale",
+            "ambata": 50,
             "ambo": [
-                83,
-                8
+                50,
+                86
             ],
             "ambetti": [
                 [
-                    83,
-                    9
+                    50,
+                    87
                 ],
                 [
-                    83,
-                    7
+                    50,
+                    85
                 ]
             ]
         },
         "Cagliari": {
             "numeri_estrazione": [
-                32,
-                55,
-                16,
-                31,
-                22
+                3,
+                65,
+                84,
+                69,
+                63
             ],
-            "spia": 32,
-            "ambata": 39,
+            "tipo_calcolo": "Chiusura Diagonale",
+            "ambata": 48,
             "ambo": [
-                39,
-                52
+                48,
+                88
             ],
             "ambetti": [
                 [
-                    39,
-                    53
+                    48,
+                    89
                 ],
                 [
-                    39,
-                    51
+                    48,
+                    87
                 ]
             ]
         },
         "Genova": {
             "numeri_estrazione": [
-                65,
-                69,
-                52,
-                36,
-                27
+                19,
+                29,
+                90,
+                53,
+                32
             ],
-            "spia": 65,
-            "ambata": 72,
+            "tipo_calcolo": "Asse Firenze-Genova (Pos.4)",
+            "ambata": 53,
             "ambo": [
-                72,
-                19
+                53,
+                54
             ],
             "ambetti": [
                 [
-                    72,
-                    20
+                    53,
+                    55
                 ],
                 [
-                    72,
-                    18
+                    53,
+                    53
                 ]
             ]
         }
