@@ -19,20 +19,24 @@ def elabora_motore_geometrico():
 
     nomi_ruote = list(archivio.keys())
     
-    # Inizializza tutte le ruote con una previsione di base per evitare schermate vuote
+    # Inizializza tutte le ruote con una previsione di base corretta
     for r in nomi_ruote:
-        if archivio[r]:
+        if archivio[r] and len(archivio[r]) > 0:
             ultimi = [int(n) for n in archivio[r][-1][:5]]
-            # Calcolo geometrico standard di sicurezza (Distanza 45 sul primo estratto)
-            ambata = fuori_90(ultimi[0] + 45)
-            abbinamento = fuori_90(91 - ultimi[0])
-            risultati_finali["previsioni"][r] = {
-                "numeri_estrazione": ultimi,
-                "tipo_calcolo": "Chiusura Diagonale",
-                "ambata": ambata,
-                "ambo": [ambata, abbinamento],
-                "ambetti": [[ambata, fuori_90(abbinamento + 1)], [ambata, fuori_90(abbinamento - 1)]]
-            }
+            if len(ultimi) >= 1:
+                # Calcolo geometrico standard sul 1° estratto della ruota
+                primo_est = ultimi[0]
+                ambata = fuori_90(primo_est + 45)
+                abbinamento = fuori_90(91 - primo_est)
+                if ambata == abbinamento: abbinamento = fuori_90(ambata + 1)
+                
+                risultati_finali["previsioni"][r] = {
+                    "numeri_estrazione": ultimi,
+                    "tipo_calcolo": "Chiusura Diagonale",
+                    "ambata": ambata,
+                    "ambo": [ambata, abbinamento],
+                    "ambetti": [[ambata, fuori_90(abbinamento + 1)], [ambata, fuori_90(abbinamento - 1)]]
+                }
 
     # Cerca armonie reali a passo incrociato tra le ruote (estratti nella stessa posizione)
     for i in range(len(nomi_ruote)):
@@ -41,6 +45,8 @@ def elabora_motore_geometrico():
             ruota_b = nomi_ruote[j]
             
             if not archivio[ruota_a] or not archivio[ruota_b]: continue
+            
+            if len(archivio[ruota_a]) == 0 or len(archivio[ruota_b]) == 0: continue
             
             est_a = [int(n) for n in archivio[ruota_a][-1][:5]]
             est_b = [int(n) for n in archivio[ruota_b][-1][:5]]
@@ -53,11 +59,10 @@ def elabora_motore_geometrico():
                 
                 # Se trova una distanza ciclometrica pura (30 o 45), la struttura è perfetta
                 if distanza == 45 or distanza == 30:
-                    # Calcola il numero di chiusura geometrica del quadrato
                     ambata_geometrica = fuori_90(num_a + distanza)
                     abbinamento_geometrico = fuori_90(num_b + 1)
+                    if ambata_geometrica == abbinamento_geometrico: abbinamento_geometrico = fuori_90(ambata_geometrica + 1)
                     
-                    # Applica la previsione geometrica speciale a entrambe le ruote coinvolte
                     for r_target in [ruota_a, ruota_b]:
                         risultati_finali["previsioni"][r_target] = {
                             "numeri_estrazione": [int(n) for n in archivio[r_target][-1][:5]],
@@ -66,7 +71,7 @@ def elabora_motore_geometrico():
                             "ambo": [ambata_geometrica, abbinamento_geometrico],
                             "ambetti": [
                                 [ambata_geometrica, fuori_90(abbinamento_geometrico + 1)],
-                                [ambata_geometrica, fuori_90(abbinamento_geometrico - 1)]
+                                [ambata_geometrica, White_out := fuori_90(abbinamento_geometrico - 1)]
                             ]
                         }
 
