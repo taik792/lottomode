@@ -3,189 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Intelligence V4 - Ruota Consigliata</title>
+    <title>Lotto Matrix Sommativo V6</title>
     <style>
         :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --bg: #f1f5f9;
+            --primary: #1e1b4b;
+            --accent: #4f46e5;
+            --bg: #f8fafc;
             --card-bg: #ffffff;
-            --text: #1e293b;
-            --ambata-bg: #fee2e2;
-            --ambata-txt: #dc2626;
-            --ambo-bg: #dcfce7;
-            --ambo-txt: #16a34a;
-            --gold: #fef08a;
-            --gold-border: #eab308;
+            --text: #0f172a;
+            --ambata-bg: #ffe4e6;
+            --ambata-txt: #e11d48;
+            --ambo-bg: #ccfbf1;
+            --ambo-txt: #0d9488;
         }
-
         body {
             font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
-            padding: 16px;
+            padding: 12px;
         }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
+        .container { max-width: 550px; margin: 0 auto; }
         header {
-            text-align: center;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            padding: 24px 16px;
-            border-radius: 16px;
-            color: white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center; margin-bottom: 16px;
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            padding: 16px; border-radius: 12px; color: white;
         }
-
-        header h1 { margin: 0 0 8px 0; font-size: 1.5rem; color: #f8fafc; }
-        .info-concorso { font-size: 0.9rem; color: #38bdf8; margin: 0; font-weight: 600; }
-
-        .ruote-container { display: flex; flex-direction: column; gap: 16px; }
-
+        header h1 { margin: 0 0 4px 0; font-size: 1.3rem; }
+        .info-concorso { font-size: 0.85rem; color: #818cf8; margin: 0; }
         .card-ruota {
-            background: var(--card-bg);
-            border-radius: 14px;
-            padding: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid var(--accent);
-            position: relative;
-            transition: transform 0.2s;
-        }
-
-        /* Stile speciale per la ruota consigliata */
-        .card-ruota.top-consigliata {
-            background-color: #fffbeb;
-            border: 2px solid var(--gold-border);
-            border-left: 8px solid var(--gold-border);
-            transform: scale(1.02);
-            box-shadow: 0 10px 15px -3px rgba(234, 179, 8, 0.2);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: var(--card-bg); border-radius: 12px; padding: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-left: 5px solid var(--accent);
             margin-bottom: 12px;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 8px;
         }
-
-        .ruota-title { font-size: 1.15rem; font-weight: 700; color: var(--primary); text-transform: uppercase; }
-        .spia-badge { background-color: #e2e8f0; color: #475569; font-size: 0.8rem; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
-        
-        .top-badge {
-            background-color: var(--gold-border);
-            color: white;
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .palline-conferite { display: flex; gap: 6px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .ruota-title { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; color: var(--primary); }
+        .spia-badge { background: #e0e7ff; color: #4338ca; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+        .palline-box { display: flex; gap: 6px; margin-bottom: 12px; }
         .pallina {
-            width: 34px; height: 34px; background: #e2e8f0; color: #1e293b;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-weight: 600; font-size: 0.95rem;
+            width: 30px; height: 30px; background: #f1f5f9; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem;
         }
-
-        .stat-box {
-            margin-top: 8px; font-size: 0.8rem; color: #64748b; font-weight: 500;
+        .pallina.first { background: #4f46e5; color: white; }
+        .previsione-box { display: flex; gap: 8px; margin-bottom: 8px; }
+        .prev-item { flex: 1; padding: 8px; border-radius: 8px; text-align: center; }
+        .prev-item.ambata { background: var(--ambata-bg); color: var(--ambata-txt); }
+        .prev-item.ambo { background: var(--ambo-bg); color: var(--ambo-txt); }
+        .prev-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; margin-bottom: 2px; }
+        .prev-value { font-size: 1.1rem; font-weight: 800; }
+        .ambetti-box {
+            background: #f8fafc; border: 1px dashed #cbd5e1; padding: 6px; border-radius: 8px;
+            font-size: 0.75rem; text-align: center;
         }
-        .stat-box strong { color: var(--primary); }
-
-        .previsione-box { display: flex; gap: 12px; margin-top: 12px; }
-        .prev-item { flex: 1; padding: 10px; border-radius: 10px; text-align: center; }
-        .prev-item.ambata { background-color: var(--ambata-bg); color: var(--ambata-txt); }
-        .prev-item.ambo { background-color: var(--ambo-bg); color: var(--ambo-txt); }
-        .prev-label { font-size: 0.75rem; text-transform: uppercase; margin-bottom: 4px; font-weight: 700; opacity: 0.8; }
-        .prev-value { font-size: 1.25rem; font-weight: 800; letter-spacing: 1px; }
-
-        .error-message { background: #fef2f2; color: #991b1b; padding: 16px; border-radius: 12px; text-align: center; font-weight: 600; }
+        .ambetti-title { font-size: 0.65rem; text-transform: uppercase; color: #64748b; font-weight: 700; margin-bottom: 2px; }
+        .ambetti-valori { color: #475569; font-weight: 600; }
     </style>
 </head>
 <body>
-
 <div class="container">
     <header>
-        <h1>Lotto Intelligence V4</h1>
-        <p id="info-concorso" class="info-concorso">Scelta Algoritmica della Ruota Migliore</p>
+        <h1>Lotto Matrix V6</h1>
+        <p id="info-concorso" class="info-concorso">Algoritmo Sommativo Attivo</p>
     </header>
-
-    <div id="ruote-list" class="ruote-container"></div>
-    <div id="errore" class="error-message" style="display: none;"></div>
+    <div id="ruote-list"></div>
 </div>
 
 <script>
     async function caricaRisultati() {
         try {
             const response = await fetch('risultati_v4.json?t=' + new Date().getTime());
-            if (!response.ok) throw new Error("Attendi il ricalcolo del motore.");
             const data = await response.json();
-            
-            if (!data || !data.previsioni || Object.keys(data.previsioni).length === 0) throw new Error("Nessun dato.");
-            
             const container = document.getElementById('ruote-list');
             container.innerHTML = ''; 
 
-            // Ordiniamo le ruote mettendo quella consigliata in cima alla lista
-            const ruoteOrdinate = Object.entries(data.previsioni).sort((a, b) => {
-                return (b[1].consigliata ? 1 : 0) - (a[1].consigliata ? 1 : 0);
-            });
-
-            for (const [ruota, info] of ruoteOrdinate) {
+            for (const [ruota, info] of Object.entries(data.previsioni)) {
                 const card = document.createElement('div');
-                card.className = `card-ruota ${info.consigliata ? 'top-consigliata' : ''}`;
-
-                const pallineHTML = info.numeri_estrazione
-                    .map(num => `<div class="pallina">${num}</div>`)
-                    .join('');
-
-                const badgeHeader = info.consigliata 
-                    ? `<span class="top-badge">🔥 RUOTA TOP CONSIGLIATA</span>` 
-                    : `<span class="spia-badge">Spia: ${info.spia}</span>`;
+                card.className = 'card-ruota';
+                
+                // Evidenzia visivamente il primo estratto che genera il calcolo
+                const pallineHTML = info.numeri_estrazione.map((num, idx) => 
+                    `<div class="pallina ${idx === 0 ? 'first' : ''}">${num}</div>`
+                ).join('');
+                
+                const ambettiString = info.ambetti.map(a => a.join('-')).join(' | ');
 
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="ruota-title">${ruota}</span>
-                        ${badgeHeader}
+                        <span class="spia-badge">Base Calcolo: ${info.spia}</span>
                     </div>
-                    <div class="palline-conferite">${pallineHTML}</div>
-                    
-                    <div class="stat-box">
-                        Sfidamento storico: l'ambata è uscita in <strong>${info.esiti_positivi}</strong> casi su <strong>${info.casi_storici}</strong> presenze della spia (<strong>${info.percentuale}%</strong> di successo).
-                    </div>
-
+                    <div class="palline-box">${pallineHTML}</div>
                     <div class="previsione-box">
-                        <div class="prev-item ambata">
-                            <div class="prev-label">Ambata</div>
-                            <div class="prev-value">${info.ambata}</div>
-                        </div>
-                        <div class="prev-item ambo">
-                            <div class="prev-label">Ambo consigliato</div>
-                            <div class="prev-value">${info.ambo.join(' - ')}</div>
-                        </div>
+                        <div class="prev-item ambata"><div class="prev-label">Ambata</div><div class="prev-value">${info.ambata}</div></div>
+                        <div class="prev-item ambo"><div class="prev-label">Ambo Secco</div><div class="prev-value">${info.ambo.join(' - ')}</div></div>
+                    </div>
+                    <div class="ambetti-box">
+                        <div class="ambetti-title">Recupero Ambetto</div>
+                        <div class="ambetti-valori">${ambettiString}</div>
                     </div>
                 `;
                 container.appendChild(card);
             }
-            
-        } catch (error) {
-            document.getElementById('info-concorso').style.display = 'none';
-            const divErrore = document.getElementById('errore');
-            divErrore.textContent = error.message;
-            divErrore.style.display = 'block';
-        }
+        } catch (e) {}
     }
-
     window.onload = caricaRisultati;
 </script>
-
 </body>
 </html>
