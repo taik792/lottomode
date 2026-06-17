@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Geometry V7 + Memory</title>
+    <title>Lotto Geometry V7 + Fixed Date</title>
     <style>
         :root {
             --primary: #064e3b;
@@ -64,7 +64,7 @@
 <div class="container">
     <header>
         <h1>Lotto Geometry V7</h1>
-        <p class="info-concorso">Analisi Geometrica Multiruota Attiva</p>
+        <p id="info-data" class="info-concorso">Analisi Geometrica Multiruota Attiva</p>
     </header>
     
     <div class="section-title">Previsione Corrente</div>
@@ -82,10 +82,13 @@
         try {
             const response = await fetch('risultati_v4.json?t=' + new Date().getTime());
             const data = await response.json();
+            
+            const dataEstrazione = data.info_concorso.data || "N.D.";
+            document.getElementById('info-data').innerText = `Estrazione del: ${dataEstrazione}`;
+            
             const container = document.getElementById('ruote-list');
             container.innerHTML = ''; 
 
-            // Gestione salvataggio in memoria delle vecchie previsioni
             let storico = JSON.parse(localStorage.getItem('lotto_storico')) || [];
             
             for (const [ruota, info] of Object.entries(data.previsioni)) {
@@ -95,7 +98,6 @@
                 const pallineHTML = info.numeri_estrazione.map(num => `<div class="pallina">${num}</div>`).join('');
                 const ambettiString = info.ambetti.map(a => a.join('-')).join(' | ');
 
-                // Crea la card della previsione attuale
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="ruota-title">${ruota}</span>
@@ -113,7 +115,6 @@
                 `;
                 container.appendChild(card);
 
-                // Salva nello storico locale se non è già presente
                 const idPrevisione = `${ruota}_${info.ambata}_${info.ambo.join('-')}`;
                 if (!storico.some(item => item.id === idPrevisione) && info.tipo_calcolo.includes('Asse')) {
                     storico.push({
@@ -123,7 +124,7 @@
                         ambata: info.ambata,
                         ambo: info.ambo.join(' - '),
                         ambetti: ambettiString,
-                        dataSalvataggio: new Date().toLocaleDateString('it-IT')
+                        dataSalvataggio: dataEstrazione // Usa la vera data dell'estrazione dal JSON
                     });
                 }
             }
@@ -144,7 +145,10 @@
             return;
         }
 
-        storico.reverse().forEach(item => {
+        // Mostra in ordine invertito (più recenti in alto)
+        let visualizza = [...storico].reverse();
+
+        visualizza.forEach(item => {
             const minicard = document.createElement('div');
             minicard.className = 'card-ruota';
             minicard.style.borderLeft = '5px solid #64748b';
@@ -152,7 +156,7 @@
             minicard.innerHTML = `
                 <div class="card-header">
                     <span class="ruota-title" style="color:#475569;">${item.ruota} (${item.dataSalvataggio})</span>
-                    <span class="spia-badge" style="background:#e2e8f0; color:#475569;">In Corso (Inseguimento)</span>
+                    <span class="spia-badge" style="background:#e2e8f0; color:#475569;">In Corso</span>
                 </div>
                 <div class="previsione-box">
                     <div class="prev-item ambata" style="background:#f1f5f9; color:#475569;"><div class="prev-label">Ambata</div><div class="prev-value">${item.ambata}</div></div>
@@ -166,10 +170,14 @@
         });
     }
 
+    function cancelAll() {
+        localStorage.removeItem('lotto_storico');
+        mostraStorico();
+    }
+    
     function cancellaStorico() {
         if (confirm("Vuoi svuotare la memoria delle vecchie previsioni?")) {
-            localStorage.removeItem('lotto_storico');
-            mostraStorico();
+            cancelAll();
         }
     }
 
