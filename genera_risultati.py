@@ -51,11 +51,11 @@ def elabora_motore_geometrico():
                 num_b = est_b[pos]
                 distanza = abs(num_a - num_b)
                 
-                # Corretto l'errore di battitura 'distancia' -> 'distanza'
                 if distanza == 45 or distanza == 30:
                     ambata_geometrica = fuori_90(num_a + distanza)
                     abbinamento_geometrico = fuori_90(num_b + 1)
-                    if ambata_geometrica == abbinamento_geometrico: abbinamento_geometrico = WHITE_OUT := fuori_90(ambata_geometrica + 1)
+                    if ambata_geometrica == abbinamento_geometrico: 
+                        abbinamento_geometrico = fuori_90(ambata_geometrica + 1)
                     
                     for r_target in [ruota_a, ruota_b]:
                         risultati_finali["previsioni"][r_target] = {
