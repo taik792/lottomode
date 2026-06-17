@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Geometry V7</title>
+    <title>Lotto Geometry V7 + Memory</title>
     <style>
         :root {
             --primary: #064e3b;
@@ -31,6 +31,7 @@
         }
         header h1 { margin: 0 0 4px 0; font-size: 1.3rem; }
         .info-concorso { font-size: 0.85rem; color: #a7f3d0; margin: 0; }
+        .section-title { font-size: 1.1rem; font-weight: 700; margin: 20px 0 10px 0; color: #1e293b; text-transform: uppercase; border-bottom: 2px solid #cbd5e1; padding-bottom: 4px; }
         .card-ruota {
             background: var(--card-bg); border-radius: 12px; padding: 14px;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-left: 5px solid var(--accent);
@@ -56,6 +57,7 @@
         }
         .ambetti-title { font-size: 0.65rem; text-transform: uppercase; color: #9ca3af; font-weight: 700; margin-bottom: 2px; }
         .ambetti-valori { color: #4b5563; font-weight: 600; }
+        .btn-clear { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer; float: right; margin-top: -30px; }
     </style>
 </head>
 <body>
@@ -64,7 +66,15 @@
         <h1>Lotto Geometry V7</h1>
         <p class="info-concorso">Analisi Geometrica Multiruota Attiva</p>
     </header>
+    
+    <div class="section-title">Previsione Corrente</div>
     <div id="ruote-list"></div>
+
+    <div class="section-title" style="margin-top: 30px;">
+        Storico colpi precedenti
+        <button class="btn-clear" onclick="cancellaStorico()">Svuota</button>
+    </div>
+    <div id="storico-list"></div>
 </div>
 
 <script>
@@ -75,16 +85,17 @@
             const container = document.getElementById('ruote-list');
             container.innerHTML = ''; 
 
+            // Gestione salvataggio in memoria delle vecchie previsioni
+            let storico = JSON.parse(localStorage.getItem('lotto_storico')) || [];
+            
             for (const [ruota, info] of Object.entries(data.previsioni)) {
                 const card = document.createElement('div');
                 card.className = 'card-ruota';
                 
-                const pallineHTML = info.numeri_estrazione.map(num => 
-                    `<div class="pallina">${num}</div>`
-                ).join('');
-                
+                const pallineHTML = info.numeri_estrazione.map(num => `<div class="pallina">${num}</div>`).join('');
                 const ambettiString = info.ambetti.map(a => a.join('-')).join(' | ');
 
+                // Crea la card della previsione attuale
                 card.innerHTML = `
                     <div class="card-header">
                         <span class="ruota-title">${ruota}</span>
@@ -101,9 +112,67 @@
                     </div>
                 `;
                 container.appendChild(card);
+
+                // Salva nello storico locale se non è già presente
+                const idPrevisione = `${ruota}_${info.ambata}_${info.ambo.join('-')}`;
+                if (!storico.some(item => item.id === idPrevisione) && info.tipo_calcolo.includes('Asse')) {
+                    storico.push({
+                        id: idPrevisione,
+                        ruota: ruota,
+                        tipo: info.tipo_calcolo,
+                        ambata: info.ambata,
+                        ambo: info.ambo.join(' - '),
+                        ambetti: ambettiString,
+                        dataSalvataggio: new Date().toLocaleDateString('it-IT')
+                    });
+                }
             }
+            
+            localStorage.setItem('lotto_storico', JSON.stringify(storico));
+            mostraStorico();
+            
         } catch (e) {}
     }
+
+    function mostraStorico() {
+        const storicoContainer = document.getElementById('storico-list');
+        storicoContainer.innerHTML = '';
+        const storico = JSON.parse(localStorage.getItem('lotto_storico')) || [];
+
+        if (storico.length === 0) {
+            storicoContainer.innerHTML = '<p style="font-size:0.85rem; color:#64748b; text-align:center;">Nessuna previsione passata salvata.</p>';
+            return;
+        }
+
+        storico.reverse().forEach(item => {
+            const minicard = document.createElement('div');
+            minicard.className = 'card-ruota';
+            minicard.style.borderLeft = '5px solid #64748b';
+            minicard.style.opacity = '0.85';
+            minicard.innerHTML = `
+                <div class="card-header">
+                    <span class="ruota-title" style="color:#475569;">${item.ruota} (${item.dataSalvataggio})</span>
+                    <span class="spia-badge" style="background:#e2e8f0; color:#475569;">In Corso (Inseguimento)</span>
+                </div>
+                <div class="previsione-box">
+                    <div class="prev-item ambata" style="background:#f1f5f9; color:#475569;"><div class="prev-label">Ambata</div><div class="prev-value">${item.ambata}</div></div>
+                    <div class="prev-item ambo" style="background:#e2e8f0; color:#1e293b;"><div class="prev-label">Ambo Secco</div><div class="prev-value">${item.ambo}</div></div>
+                </div>
+                <div class="ambetti-box">
+                    <div class="ambetti-valori">${item.ambetti}</div>
+                </div>
+            `;
+            storicoContainer.appendChild(minicard);
+        });
+    }
+
+    function cancellaStorico() {
+        if (confirm("Vuoi svuotare la memoria delle vecchie previsioni?")) {
+            localStorage.removeItem('lotto_storico');
+            mostraStorico();
+        }
+    }
+
     window.onload = caricaRisultati;
 </script>
 </body>
