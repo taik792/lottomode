@@ -12,24 +12,15 @@ def elabora_motore_geometrico():
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    # Recupera la data reale dell'ultima estrazione presente nell'archivio (se disponibile)
-    data_reale = "Estrazione Recente"
-    try:
-        # Cerca la data nell'ultimo elemento se la struttura dell'archivio la prevede
-        # Altrimenti il sistema usa il tag dinamico corretto del concorso
-        pass
-    except:
-        pass
-
     risultati_finali = {
-        "info_concorso": {"numero": "Ciclometria Spaziale V7", "data": "16/06/2026"}, # Inserisce la data reale del concorso
+        "info_concorso": {"numero": "Ciclometria Spaziale V7", "data": "16/06/2026"},
         "previsioni": {}
     }
 
     nomi_ruote = list(archivio.keys())
     
     for r in nomi_ruote:
-        if archivio[r] and len(archivio[r]) > 0:
+        if r in archivio and isinstance(archivio[r], list) and len(archivio[r]) > 0:
             ultimi = [int(n) for n in archivio[r][-1][:5]]
             if len(ultimi) >= 1:
                 primo_est = ultimi[0]
@@ -60,10 +51,11 @@ def elabora_motore_geometrico():
                 num_b = est_b[pos]
                 distanza = abs(num_a - num_b)
                 
-                if distancia == 45 or distanza == 30:
+                # Corretto l'errore di battitura 'distancia' -> 'distanza'
+                if distanza == 45 or distanza == 30:
                     ambata_geometrica = fuori_90(num_a + distanza)
                     abbinamento_geometrico = fuori_90(num_b + 1)
-                    if ambata_geometrica == abbinamento_geometrico: abbinamento_geometrico = fuori_90(ambata_geometrica + 1)
+                    if ambata_geometrica == abbinamento_geometrico: abbinamento_geometrico = WHITE_OUT := fuori_90(ambata_geometrica + 1)
                     
                     for r_target in [ruota_a, ruota_b]:
                         risultati_finali["previsioni"][r_target] = {
