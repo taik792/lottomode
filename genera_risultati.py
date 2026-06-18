@@ -6,6 +6,13 @@ def fuori_90(numero):
     while numero <= 0: numero += 90
     return numero
 
+def calcola_diametrale(numero):
+    """Calcola il diametrale ciclometrico perfetto (Distanza 45)."""
+    if numero <= 45:
+        return numero + 45
+    else:
+        return numero - 45
+
 def elabora_motore_geometrico():
     if not os.path.exists('estrazioni.json'): return
 
@@ -13,19 +20,20 @@ def elabora_motore_geometrico():
         archivio = json.load(f)
 
     risultati_finali = {
-        "info_concorso": {"numero": "Ciclometria Spaziale V7", "data": "16/06/2026"},
+        "info_concorso": {"numero": "Ciclometria Spaziale V7", "data": "18/06/2026"},
         "previsioni": {}
     }
 
     nomi_ruote = list(archivio.keys())
     
+    # Previsione base simmetrica di sicurezza (Vera chiusura a Distanza 45)
     for r in nomi_ruote:
         if r in archivio and isinstance(archivio[r], list) and len(archivio[r]) > 0:
             ultimi = [int(n) for n in archivio[r][-1][:5]]
             if len(ultimi) >= 1:
                 primo_est = ultimi[0]
                 ambata = fuori_90(primo_est + 45)
-                abbinamento = fuori_90(91 - primo_est)
+                abbinamento = calcola_diametrale(ambata)
                 if ambata == abbinamento: abbinamento = fuori_90(ambata + 1)
                 
                 risultati_finali["previsioni"][r] = {
@@ -36,6 +44,7 @@ def elabora_motore_geometrico():
                     "ambetti": [[ambata, fuori_90(abbinamento + 1)], [ambata, fuori_90(abbinamento - 1)]]
                 }
 
+    # Cerca gli assi armonici reali tra le ruote
     for i in range(len(nomi_ruote)):
         for j in range(i + 1, len(nomi_ruote)):
             ruota_a = nomi_ruote[i]
@@ -50,10 +59,15 @@ def elabora_motore_geometrico():
                 num_a = est_a[pos]
                 num_b = est_b[pos]
                 distanza = abs(num_a - num_b)
+                if distanza > 45: distanza = 90 - distanza
                 
+                # Se trova la distanza armonica pura
                 if distanza == 45 or distanza == 30:
+                    # La vera Ambata di Chiusura Ciclometrica
                     ambata_geometrica = fuori_90(num_a + distanza)
-                    abbinamento_geometrico = fuori_90(num_b + 1)
+                    # L'abbinamento diventa il Diametrale Naturale dell'Ambata stessa
+                    abbinamento_geometrico = calcola_diametrale(ambata_geometrica)
+                    
                     if ambata_geometrica == abbinamento_geometrico: 
                         abbinamento_geometrico = fuori_90(ambata_geometrica + 1)
                     
