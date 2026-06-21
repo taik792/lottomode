@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Geometry V7 + Fixed Date</title>
+    <title>Lotto Geometry V7</title>
     <style>
         :root {
             --primary: #064e3b;
@@ -115,7 +115,7 @@
                 `;
                 container.appendChild(card);
 
-                const idPrevisione = `${ruota}_${info.ambata}_${info.ambo.join('-')}`;
+                const idPrevisione = `${dataEstrazione.replace(/\//g, '-')}_${ruota}_${info.ambata}`;
                 if (!storico.some(item => item.id === idPrevisione) && info.tipo_calcolo.includes('Asse')) {
                     storico.push({
                         id: idPrevisione,
@@ -124,7 +124,7 @@
                         ambata: info.ambata,
                         ambo: info.ambo.join(' - '),
                         ambetti: ambettiString,
-                        dataSalvataggio: dataEstrazione // Usa la vera data dell'estrazione dal JSON
+                        dataSalvataggio: dataEstrazione
                     });
                 }
             }
@@ -145,7 +145,6 @@
             return;
         }
 
-        // Mostra in ordine invertito (più recenti in alto)
         let visualizza = [...storico].reverse();
 
         visualizza.forEach(item => {
