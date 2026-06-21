@@ -1,90 +1,187 @@
-import json
-import os
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotto Geometry V7 + Permanent Memory</title>
+    <style>
+        :root {
+            --primary: #064e3b;
+            --accent: #059669;
+            --bg: #f0fdf4;
+            --card-bg: #ffffff;
+            --text: #065f46;
+            --ambata-bg: #fef3c7;
+            --ambata-txt: #d97706;
+            --ambo-bg: #d1fae5;
+            --ambo-txt: #065f46;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: #1f2937;
+            margin: 0;
+            padding: 12px;
+        }
+        .container { max-width: 550px; margin: 0 auto; }
+        header {
+            text-align: center; margin-bottom: 16px;
+            background: linear-gradient(135deg, #064e3b, #047857);
+            padding: 16px; border-radius: 12px; color: white;
+        }
+        header h1 { margin: 0 0 4px 0; font-size: 1.3rem; }
+        .info-concorso { font-size: 0.85rem; color: #a7f3d0; margin: 0; }
+        .section-title { font-size: 1.1rem; font-weight: 700; margin: 20px 0 10px 0; color: #1e293b; text-transform: uppercase; border-bottom: 2px solid #cbd5e1; padding-bottom: 4px; }
+        .card-ruota {
+            background: var(--card-bg); border-radius: 12px; padding: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-left: 5px solid var(--accent);
+            margin-bottom: 12px;
+        }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .ruota-title { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; color: var(--primary); }
+        .spia-badge { background: #e0f2fe; color: #0369a1; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+        .palline-box { display: flex; gap: 6px; margin-bottom: 12px; }
+        .pallina {
+            width: 30px; height: 30px; background: #f3f4f6; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.85rem;
+        }
+        .previsione-box { display: flex; gap: 8px; margin-bottom: 8px; }
+        .prev-item { flex: 1; padding: 8px; border-radius: 8px; text-align: center; }
+        .prev-item.ambata { background: var(--ambata-bg); color: var(--ambata-txt); }
+        .prev-item.ambo { background: var(--ambo-bg); color: var(--ambo-txt); }
+        .prev-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; margin-bottom: 2px; }
+        .prev-value { font-size: 1.1rem; font-weight: 800; }
+        .ambetti-box {
+            background: #fafafa; border: 1px solid #e5e7eb; padding: 6px; border-radius: 8px;
+            font-size: 0.75rem; text-align: center;
+        }
+        .ambetti-title { font-size: 0.65rem; text-transform: uppercase; color: #9ca3af; font-weight: 700; margin-bottom: 2px; }
+        .ambetti-valori { color: #4b5563; font-weight: 600; }
+        .btn-clear { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer; float: right; margin-top: -30px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Lotto Geometry V7</h1>
+        <p id="info-data" class="info-concorso">Analisi Geometrica Multiruota Attiva</p>
+    </header>
+    
+    <div class="section-title">Previsione Corrente</div>
+    <div id="ruote-list"></div>
 
-def fuori_90(numero):
-    while numero > 90: numero -= 90
-    while numero <= 0: numero += 90
-    return numero
+    <div class="section-title" style="margin-top: 30px;">
+        Storico colpi precedenti
+        <button class="btn-clear" onclick="cancellaStorico()">Svuota</button>
+    </div>
+    <div id="storico-list"></div>
+</div>
 
-def calcola_diametrale(numero):
-    """Calcola il diametrale ciclometrico perfetto (Distanza 45)."""
-    if numero <= 45:
-        return numero + 45
-    else:
-        return numero - 45
+<script>
+    async function caricaRisultati() {
+        try {
+            const response = await fetch('risultati_v4.json?t=' + new Date().getTime());
+            const data = await response.json();
+            
+            const dataEstrazione = data.info_concorso.data || "N.D.";
+            document.getElementById('info-data').innerText = `Estrazione del: ${dataEstrazione}`;
+            
+            const container = document.getElementById('ruote-list');
+            container.innerHTML = ''; 
 
-def elabora_motore_geometrico():
-    if not os.path.exists('estrazioni.json'): return
+            let storico = JSON.parse(localStorage.getItem('lotto_storico')) || [];
+            
+            for (const [ruota, info] of Object.entries(data.previsioni)) {
+                const card = document.createElement('div');
+                card.className = 'card-ruota';
+                
+                const pallineHTML = info.numeri_estrazione.map(num => `<div class="pallina">${num}</div>`).join('');
+                const ambettiString = info.ambetti.map(a => a.join('-')).join(' | ');
 
-    with open('estrazioni.json', 'r', encoding='utf-8') as f:
-        archivio = json.load(f)
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="ruota-title">${ruota}</span>
+                        <span class="spia-badge">${info.tipo_calcolo}</span>
+                    </div>
+                    <div class="palline-box">${pallineHTML}</div>
+                    <div class="previsione-box">
+                        <div class="prev-item ambata"><div class="prev-label">Ambata Geo</div><div class="prev-value">${info.ambata}</div></div>
+                        <div class="prev-item ambo"><div class="prev-label">Ambo Chiusura</div><div class="prev-value">${info.ambo.join(' - ')}</div></div>
+                    </div>
+                    <div class="ambetti-box">
+                        <div class="ambetti-title">Combinazioni di Sostegno</div>
+                        <div class="ambetti-valori">${ambettiString}</div>
+                    </div>
+                `;
+                container.appendChild(card);
 
-    risultati_finali = {
-        "info_concorso": {"numero": "Ciclometria Spaziale V7", "data": "18/06/2026"},
-        "previsioni": {}
+                // CORREZIONE: Inseriamo la data della previsione nell'ID per bloccarla per sempre
+                const idPrevisione = `${dataEstrazione.replace(/\//g, '-')}_${ruota}_${info.ambata}`;
+                if (!storico.some(item => item.id === idPrevisione) && info.tipo_calcolo.includes('Asse')) {
+                    storico.push({
+                        id: idPrevisione,
+                        ruota: ruota,
+                        tipo: info.tipo_calcolo,
+                        ambata: info.ambata,
+                        ambo: info.ambo.join(' - '),
+                        ambetti: ambettiString,
+                        dataSalvataggio: dataEstrazione
+                    });
+                }
+            }
+            
+            localStorage.setItem('lotto_storico', JSON.stringify(storico));
+            mostraStorico();
+            
+        } catch (e) {}
     }
 
-    nomi_ruote = list(archivio.keys())
+    function mostraStorico() {
+        const storicoContainer = document.getElementById('storico-list');
+        storicoContainer.innerHTML = '';
+        const storico = JSON.parse(localStorage.getItem('lotto_storico')) || [];
+
+        if (storico.length === 0) {
+            storicoContainer.innerHTML = '<p style="font-size:0.85rem; color:#64748b; text-align:center;">Nessuna previsione passata salvata.</p>';
+            return;
+        }
+
+        let visualizza = [...storico].reverse();
+
+        visualizza.forEach(item => {
+            const minicard = document.createElement('div');
+            minicard.className = 'card-ruota';
+            minicard.style.borderLeft = '5px solid #64748b';
+            minicard.style.opacity = '0.85';
+            minicard.innerHTML = `
+                <div class="card-header">
+                    <span class="ruota-title" style="color:#475569;">${item.ruota} (${item.dataSalvataggio})</span>
+                    <span class="spia-badge" style="background:#e2e8f0; color:#475569;">In Corso</span>
+                </div>
+                <div class="previsione-box">
+                    <div class="prev-item ambata" style="background:#f1f5f9; color:#475569;"><div class="prev-label">Ambata</div><div class="prev-value">${item.ambata}</div></div>
+                    <div class="prev-item ambo" style="background:#e2e8f0; color:#1e293b;"><div class="prev-label">Ambo Secco</div><div class="prev-value">${item.ambo}</div></div>
+                </div>
+                <div class="ambetti-box">
+                    <div class="ambetti-valori">${item.ambetti}</div>
+                </div>
+            `;
+            storicoContainer.appendChild(minicard);
+        });
+    }
+
+    function cancelAll() {
+        localStorage.removeItem('lotto_storico');
+        mostraStorico();
+    }
     
-    # Previsione base simmetrica di sicurezza (Vera chiusura a Distanza 45)
-    for r in nomi_ruote:
-        if r in archivio and isinstance(archivio[r], list) and len(archivio[r]) > 0:
-            ultimi = [int(n) for n in archivio[r][-1][:5]]
-            if len(ultimi) >= 1:
-                primo_est = ultimi[0]
-                ambata = fuori_90(primo_est + 45)
-                abbinamento = calcola_diametrale(ambata)
-                if ambata == abbinamento: abbinamento = fuori_90(ambata + 1)
-                
-                risultati_finali["previsioni"][r] = {
-                    "numeri_estrazione": ultimi,
-                    "tipo_calcolo": "Chiusura Diagonale",
-                    "ambata": ambata,
-                    "ambo": [ambata, abbinamento],
-                    "ambetti": [[ambata, fuori_90(abbinamento + 1)], [ambata, fuori_90(abbinamento - 1)]]
-                }
+    function cancellaStorico() {
+        if (confirm("Vuoi svuotare la memoria delle vecchie previsioni?")) {
+            cancelAll();
+        }
+    }
 
-    # Cerca gli assi armonici reali tra le ruote
-    for i in range(len(nomi_ruote)):
-        for j in range(i + 1, len(nomi_ruote)):
-            ruota_a = nomi_ruote[i]
-            ruota_b = nomi_ruote[j]
-            if not archivio[ruota_a] or not archivio[ruota_b]: continue
-            if len(archivio[ruota_a]) == 0 or len(archivio[ruota_b]) == 0: continue
-            
-            est_a = [int(n) for n in archivio[ruota_a][-1][:5]]
-            est_b = [int(n) for n in archivio[ruota_b][-1][:5]]
-            
-            for pos in range(min(len(est_a), len(est_b))):
-                num_a = est_a[pos]
-                num_b = est_b[pos]
-                distanza = abs(num_a - num_b)
-                if distanza > 45: distanza = 90 - distanza
-                
-                # Se trova la distanza armonica pura
-                if distanza == 45 or distanza == 30:
-                    # La vera Ambata di Chiusura Ciclometrica
-                    ambata_geometrica = fuori_90(num_a + distanza)
-                    # L'abbinamento diventa il Diametrale Naturale dell'Ambata stessa
-                    abbinamento_geometrico = calcola_diametrale(ambata_geometrica)
-                    
-                    if ambata_geometrica == abbinamento_geometrico: 
-                        abbinamento_geometrico = fuori_90(ambata_geometrica + 1)
-                    
-                    for r_target in [ruota_a, ruota_b]:
-                        risultati_finali["previsioni"][r_target] = {
-                            "numeri_estrazione": [int(n) for n in archivio[r_target][-1][:5]],
-                            "tipo_calcolo": f"Asse {ruota_a}-{ruota_b} (Pos.{pos+1})",
-                            "ambata": ambata_geometrica,
-                            "ambo": [ambata_geometrica, abbinamento_geometrico],
-                            "ambetti": [
-                                [ambata_geometrica, fuori_90(abbinamento_geometrico + 1)],
-                                [ambata_geometrica, fuori_90(abbinamento_geometrico - 1)]
-                            ]
-                        }
-
-    with open('risultati_v4.json', 'w', encoding='utf-8') as f:
-        json.dump(risultati_finali, f, indent=4, ensure_ascii=False)
-
-if __name__ == "__main__":
-    elabora_motore_geometrico()
+    window.onload = caricaRisultati;
+</script>
+</body>
+</html>
