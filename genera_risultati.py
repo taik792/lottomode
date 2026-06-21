@@ -18,8 +18,8 @@ def elabora_motore_geometrico():
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    # Rileva automaticamente l'ultimo concorso aggiornato per inserire la data corretta
-    data_reale = "20/06/2026" 
+    # Data dinamica o fissa dell'ultimo concorso elaborato
+    data_reale = "20/06/2026"
     
     risultati_finali = {
         "info_concorso": {"numero": "Ciclometria Spaziale V7", "data": data_reale},
@@ -28,6 +28,7 @@ def elabora_motore_geometrico():
 
     nomi_ruote = list(archivio.keys())
     
+    # Previsione base simmetrica di sicurezza
     for r in nomi_ruote:
         if r in archivio and isinstance(archivio[r], list) and len(archivio[r]) > 0:
             ultimi = [int(n) for n in archivio[r][-1][:5]]
@@ -45,6 +46,7 @@ def elabora_motore_geometrico():
                     "ambetti": [[ambata, fuori_90(abbinamento + 1)], [ambata, fuori_90(abbinamento - 1)]]
                 }
 
+    # Cerca gli assi armonici reali tra le ruote
     for i in range(len(nomi_ruote)):
         for j in range(i + 1, len(nomi_ruote)):
             ruota_a = nomi_ruote[i]
