@@ -7,83 +7,48 @@ def fuori_90(numero):
     return numero
 
 def calcola_diametrale(numero):
-    if numero <= 45:
-        return numero + 45
-    else:
-        return numero - 45
+    if numero <= 45: return numero + 45
+    return numero - 45
 
-def elabora_motore_geometrico():
+def elabora_motore_sommativo():
     if not os.path.exists('estrazioni.json'): return
 
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    # Data dinamica o fissa dell'ultimo concorso elaborato
-    data_reale = "20/06/2026"
+    # Impostiamo la data dell'ultimo concorso reale di stasera
+    data_reale = "26/06/2026"
     
     risultati_finali = {
-        "info_concorso": {"numero": "Ciclometria Spaziale V7", "data": data_reale},
+        "info_concorso": {"numero": "Algoritmo Isotopo V8", "data": data_reale},
         "previsioni": {}
     }
 
-    nomi_ruote = list(archivio.keys())
-    
-    # Previsione base simmetrica di sicurezza
-    for r in nomi_ruote:
-        if r in archivio and isinstance(archivio[r], list) and len(archivio[r]) > 0:
-            ultimi = [int(n) for n in archivio[r][-1][:5]]
-            if len(ultimi) >= 1:
-                primo_est = ultimi[0]
-                ambata = fuori_90(primo_est + 45)
-                abbinamento = calcola_diametrale(ambata)
-                if ambata == abbinamento: abbinamento = fuori_90(ambata + 1)
-                
-                risultati_finali["previsioni"][r] = {
-                    "numeri_estrazione": ultimi,
-                    "tipo_calcolo": "Chiusura Diagonale",
+    # Estraiamo il primo numero di Bari come Capogioco dell'intera estrazione
+    if "BARI" in archivio and len(archivio["BARI"]) > 0:
+        ultimo_bari = [int(n) for n in archivio["BARI"][-1][:5]]
+        primo_bari = ultimo_bari[0]
+        
+        # CALCOLO MATEMATICO FISSO
+        ambata = fuori_90(primo_bari + 15)
+        abbinamento = calcola_diametrale(ambata)
+        
+        # Applichiamo la previsione unificata solo su BARI e MILANO
+        for r_target in ["BARI", "MILANO"]:
+            if r_target in archivio and len(archivio[r_target]) > 0:
+                risultati_finali["previsioni"][r_target] = {
+                    "numeri_estrazione": [int(n) for n in archivio[r_target][-1][:5]],
+                    "tipo_calcolo": f"Sommativo da 1° Bari ({primo_bari})",
                     "ambata": ambata,
                     "ambo": [ambata, abbinamento],
-                    "ambetti": [[ambata, fuori_90(abbinamento + 1)], [ambata, fuori_90(abbinamento - 1)]]
+                    "ambetti": [
+                        [ambata, fuori_90(abbinamento + 1)],
+                        [ambata, fuori_90(fuori_90(abbinamento - 1))]
+                    ]
                 }
-
-    # Cerca gli assi armonici reali tra le ruote
-    for i in range(len(nomi_ruote)):
-        for j in range(i + 1, len(nomi_ruote)):
-            ruota_a = nomi_ruote[i]
-            ruota_b = nomi_ruote[j]
-            if not archivio[ruota_a] or not archivio[ruota_b]: continue
-            if len(archivio[ruota_a]) == 0 or len(archivio[ruota_b]) == 0: continue
-            
-            est_a = [int(n) for n in archivio[ruota_a][-1][:5]]
-            est_b = [int(n) for n in archivio[ruota_b][-1][:5]]
-            
-            for pos in range(min(len(est_a), len(est_b))):
-                num_a = est_a[pos]
-                num_b = est_b[pos]
-                distanza = abs(num_a - num_b)
-                if distanza > 45: distanza = 90 - distanza
-                
-                if distanza == 45 or distanza == 30:
-                    ambata_geometrica = fuori_90(num_a + distanza)
-                    abbinamento_geometrico = calcola_diametrale(ambata_geometrica)
-                    
-                    if ambata_geometrica == abbinamento_geometrico: 
-                        abbinamento_geometrico = fuori_90(ambata_geometrica + 1)
-                    
-                    for r_target in [ruota_a, ruota_b]:
-                        risultati_finali["previsioni"][r_target] = {
-                            "numeri_estrazione": [int(n) for n in archivio[r_target][-1][:5]],
-                            "tipo_calcolo": f"Asse {ruota_a}-{ruota_b} (Pos.{pos+1})",
-                            "ambata": ambata_geometrica,
-                            "ambo": [ambata_geometrica, abbinamento_geometrico],
-                            "ambetti": [
-                                [ambata_geometrica, fuori_90(abbinamento_geometrico + 1)],
-                                [ambata_geometrica, fuori_90(abbinamento_geometrico - 1)]
-                            ]
-                        }
 
     with open('risultati_v4.json', 'w', encoding='utf-8') as f:
         json.dump(risultati_finali, f, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
-    elabora_motore_geometrico()
+    elabora_motore_sommativo()
