@@ -3,5 +3,56 @@
         "numero": "Algoritmo Isotopo V8",
         "data": "26/06/2026"
     },
-    "previsioni": {}
+    "previsioni": {
+        "Bari": {
+            "numeri_estrazione": [
+                3,
+                59,
+                2,
+                56,
+                5
+            ],
+            "tipo_calcolo": "Sommativo da 1° Bari (3)",
+            "ambata": 18,
+            "ambo": [
+                18,
+                63
+            ],
+            "ambetti": [
+                [
+                    18,
+                    64
+                ],
+                [
+                    18,
+                    62
+                ]
+            ]
+        },
+        "Milano": {
+            "numeri_estrazione": [
+                77,
+                59,
+                11,
+                43,
+                3
+            ],
+            "tipo_calcolo": "Sommativo da 1° Bari (3)",
+            "ambata": 18,
+            "ambo": [
+                18,
+                63
+            ],
+            "ambetti": [
+                [
+                    18,
+                    64
+                ],
+                [
+                    18,
+                    62
+                ]
+            ]
+        }
+    }
 }
