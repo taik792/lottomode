@@ -16,7 +16,6 @@ def elabora_motore_sommativo():
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    # Impostiamo la data dell'ultimo concorso reale di stasera
     data_reale = "26/06/2026"
     
     risultati_finali = {
@@ -24,31 +23,40 @@ def elabora_motore_sommativo():
         "previsioni": {}
     }
 
-    # Estraiamo il primo numero di Bari come Capogioco dell'intera estrazione
-    if "BARI" in archivio and len(archivio["BARI"]) > 0:
-        ultimo_bari = [int(n) for n in archivio["BARI"][-1][:5]]
-        primo_bari = ultimo_bari[0]
-        
-        # CALCOLO MATEMATICO FISSO
-        ambata = fuori_90(primo_bari + 15)
-        abbinamento = calcola_diametrale(ambata)
-        
-        # Applichiamo la previsione unificata solo su BARI e MILANO
-        for r_target in ["BARI", "MILANO"]:
-            if r_target in archivio and len(archivio[r_target]) > 0:
-                risultati_finali["previsioni"][r_target] = {
-                    "numeri_estrazione": [int(n) for n in archivio[r_target][-1][:5]],
-                    "tipo_calcolo": f"Sommativo da 1° Bari ({primo_bari})",
-                    "ambata": ambata,
-                    "ambo": [ambata, abbinamento],
-                    "ambetti": [
-                        [ambata, fuori_90(abbinamento + 1)],
-                        [ambata, fuori_90(fuori_90(abbinamento - 1))]
-                    ]
-                }
+    # Creiamo un archivio con le chiavi tutte in maiuscolo per evitare errori di scrittura
+    archivio_pulito = {k.upper(): v for k, v in archivio.items() if isinstance(v, list)}
+
+    # Cerchiamo la ruota di Bari in modo sicuro
+    if "BARI" in archivio_pulito and len(archivio_pulito["BARI"]) > 0:
+        ultima_estrazione_bari = archivio_pulito["BARI"][-1]
+        if isinstance(ultima_estrazione_bari, list) and len(ultima_estrazione_bari) >= 1:
+            try:
+                # Prende l'INDICE 0 (il primo estratto reale)
+                primo_bari = int(ultima_estrazione_bari[0])
+                
+                # CALCOLO MATEMATICO DEL CAPOGIOCO ISOTOPO
+                ambata = fuori_90(primo_bari + 15)
+                abbinamento = calcola_diametrale(ambata)
+                
+                # Generiamo la previsione per Bari e Milano (o le ruote corrispondenti nell'archivio)
+                for ruota_chiave, lista_estrazioni in archivio.items():
+                    if ruota_chiave.upper() in ["BARI", "MILANO"] and len(lista_estrazioni) > 0:
+                        risultati_finali["previsioni"][ruota_chiave] = {
+                            "numeri_estrazione": [int(n) for n in lista_estrazioni[-1][:5]],
+                            "tipo_calcolo": f"Sommativo da 1° Bari ({primo_bari})",
+                            "ambata": ambata,
+                            "ambo": [ambata, abbinamento],
+                            "ambetti": [
+                                [ambata, fuori_90(abbinamento + 1)],
+                                [ambata, fuori_90(abbinamento - 1)]
+                            ]
+                        }
+            except (ValueError, IndexError):
+                pass
 
     with open('risultati_v4.json', 'w', encoding='utf-8') as f:
         json.dump(risultati_finali, f, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
-    elabora_motore_sommativo()
+    elabora_motore_geometrico = elabora_motore_sommativo
+    elabora_motore_geometrico()
