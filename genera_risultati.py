@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime
 
 def fuori_90(numero):
     while numero > 90: numero -= 90
@@ -16,29 +17,28 @@ def elabora_motore_sommativo():
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    data_reale = "26/06/2026"
-    
+    # CORREZIONE: Cerca la data reale se presente nell'archivio, altrimenti usa la data di oggi
+    data_reale = datetime.now().strftime("%d/%m/%Y")
+    if "info_concorso" in archivio and "data" in archivio["info_concorso"]:
+        data_reale = archivio["info_concorso"]["data"]
+    elif "data" in archivio:
+        data_reale = archivio["data"]
+
     risultati_finali = {
         "info_concorso": {"numero": "Algoritmo Isotopo V8", "data": data_reale},
         "previsioni": {}
     }
 
-    # Creiamo un archivio con le chiavi tutte in maiuscolo per evitare errori di scrittura
     archivio_pulito = {k.upper(): v for k, v in archivio.items() if isinstance(v, list)}
 
-    # Cerchiamo la ruota di Bari in modo sicuro
     if "BARI" in archivio_pulito and len(archivio_pulito["BARI"]) > 0:
         ultima_estrazione_bari = archivio_pulito["BARI"][-1]
         if isinstance(ultima_estrazione_bari, list) and len(ultima_estrazione_bari) >= 1:
             try:
-                # Prende l'INDICE 0 (il primo estratto reale)
                 primo_bari = int(ultima_estrazione_bari[0])
-                
-                # CALCOLO MATEMATICO DEL CAPOGIOCO ISOTOPO
                 ambata = fuori_90(primo_bari + 15)
                 abbinamento = calcola_diametrale(ambata)
                 
-                # Generiamo la previsione per Bari e Milano (o le ruote corrispondenti nell'archivio)
                 for ruota_chiave, lista_estrazioni in archivio.items():
                     if ruota_chiave.upper() in ["BARI", "MILANO"] and len(lista_estrazioni) > 0:
                         risultati_finali["previsioni"][ruota_chiave] = {
@@ -58,5 +58,4 @@ def elabora_motore_sommativo():
         json.dump(risultati_finali, f, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
-    elabora_motore_geometrico = elabora_motore_sommativo
-    elabora_motore_geometrico()
+    elabora_motore_sommativo()
