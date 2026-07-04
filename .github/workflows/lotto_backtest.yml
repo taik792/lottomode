@@ -22,10 +22,10 @@ jobs:
 
     - name: Esegui Test Storico V8
       run: |
-        if [ -f test_storico_v8.py ]; then
-                  python ottimizzatore_v8.py
-
+        if [ -f genera_risultati.py ]; then
+          python genera_risultati.py
         else
-          echo "Errore: Il file test_storico_v8.py non esiste nella repository!"
+          echo "Errore: Il file genera_risultati.py non esiste nella repository!"
           exit 1
         fi
+
