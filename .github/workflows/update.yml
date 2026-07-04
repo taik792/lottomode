@@ -1,4 +1,6 @@
 name: Lotto Bot V4
+permissions:
+  contents: write
 
 on:
   schedule:
