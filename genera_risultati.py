@@ -14,7 +14,6 @@ def calcola_diametrale(numero):
 def elabora_motore_sommativo():
     if not os.path.exists('estrazioni.json'): return
 
-    # Scegli qui il tuo fisso: 25 per più Ambi (5.44%), 21 per più Ambate (66.39%)
     FISSO_OTTIMIZZATO = 25 
 
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
@@ -28,8 +27,14 @@ def elabora_motore_sommativo():
 
     risultati_finali = {
         "info_concorso": {"numero": "Lotto Intelligence V8", "data": data_reale},
-        "previsioni": {}
+        "previsioni": {},
+        "archivio_completo": {} # Passiamo l'intero archivio per permettere il controllo vincite al JS
     }
+
+    # Passiamo le estrazioni reali pulite al Front-End per il riscontro vincite
+    for r_k, r_v in archivio.items():
+        if isinstance(r_v, list):
+            risultati_finali["archivio_completo"][r_k.upper()] = r_v
 
     archivio_pulito = {k.upper(): v for k, v in archivio.items() if isinstance(v, list)}
 
