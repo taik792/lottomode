@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Isotopo V8</title>
+    <title>Lotto Intelligence V8</title>
     <style>
         :root {
             --primary: #1e3a8a;
@@ -127,6 +127,7 @@
                 }
             }
             
+            // CORREZIONE: Salvataggio e aggiornamento spostati fuori dal ciclo for
             localStorage.setItem('lotto_storico_v8', JSON.stringify(storico));
             mostraStorico();
             
@@ -146,16 +147,16 @@
         [...storico].reverse().forEach(item => {
             const minicard = document.createElement('div');
             minicard.className = 'card-ruota';
-            minicard.style.borderLeft = '5px solid #64748b';
-            minicard.style.opacity = '0.85';
+            minicard.style.borderLeft = '5px solid #10b981'; /* Verde successo */
+            minicard.style.opacity = '0.9';
             minicard.innerHTML = `
                 <div class="card-header">
-                    <span class="ruota-title" style="color:#475569;">${item.ruota} (${item.dataSalvataggio})</span>
-                    <span class="spia-badge">Storico colpi</span>
+                    <span class="ruota-title" style="color:#047857;">${item.ruota} (${item.dataSalvataggio})</span>
+                    <span class="spia-badge" style="background:#d1fae5; color:#065f46;">In gioco (Ciclo 9 colpi)</span>
                 </div>
                 <div class="previsione-box">
-                    <div class="prev-item ambata" style="background:#f1f5f9; color:#475569;"><div class="prev-label">Ambata</div><div class="prev-value">${item.ambata}</div></div>
-                    <div class="prev-item ambo" style="background:#e2e8f0; color:#1e293b;"><div class="prev-label">Ambo</div><div class="prev-value">${item.ambo}</div></div>
+                    <div class="prev-item ambata" style="background:#f0fdf4; color:#166534;"><div class="prev-label">Ambata</div><div class="prev-value">${item.ambata}</div></div>
+                    <div class="prev-item ambo" style="background:#ecfdf5; color:#065f46;"><div class="prev-label">Ambo</div><div class="prev-value">${item.ambo}</div></div>
                 </div>
             `;
             storicoContainer.appendChild(minicard);
@@ -163,7 +164,7 @@
     }
 
     function cancellaStorico() {
-        if (confirm("Vuoi svuotare la memoria dei vecchi tentativi falliti?")) {
+        if (confirm("Vuoi svuotare la memoria delle previsioni salvate?")) {
             localStorage.removeItem('lotto_storico_v8');
             mostraStorico();
         }
