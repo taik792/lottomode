@@ -14,10 +14,12 @@ def calcola_diametrale(numero):
 def elabora_motore_sommativo():
     if not os.path.exists('estrazioni.json'): return
 
+    # Scegli qui il tuo fisso: 25 per più Ambi (5.44%), 21 per più Ambate (66.39%)
+    FISSO_OTTIMIZZATO = 25 
+
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    # CORREZIONE: Cerca la data reale se presente nell'archivio, altrimenti usa la data di oggi
     data_reale = datetime.now().strftime("%d/%m/%Y")
     if "info_concorso" in archivio and "data" in archivio["info_concorso"]:
         data_reale = archivio["info_concorso"]["data"]
@@ -25,7 +27,7 @@ def elabora_motore_sommativo():
         data_reale = archivio["data"]
 
     risultati_finali = {
-        "info_concorso": {"numero": "Algoritmo Isotopo V8", "data": data_reale},
+        "info_concorso": {"numero": "Lotto Intelligence V8", "data": data_reale},
         "previsioni": {}
     }
 
@@ -36,14 +38,14 @@ def elabora_motore_sommativo():
         if isinstance(ultima_estrazione_bari, list) and len(ultima_estrazione_bari) >= 1:
             try:
                 primo_bari = int(ultima_estrazione_bari[0])
-                ambata = fuori_90(primo_bari + 15)
+                ambata = fuori_90(primo_bari + FISSO_OTTIMIZZATO)
                 abbinamento = calcola_diametrale(ambata)
                 
                 for ruota_chiave, lista_estrazioni in archivio.items():
                     if ruota_chiave.upper() in ["BARI", "MILANO"] and len(lista_estrazioni) > 0:
                         risultati_finali["previsioni"][ruota_chiave] = {
                             "numeri_estrazione": [int(n) for n in lista_estrazioni[-1][:5]],
-                            "tipo_calcolo": f"Sommativo da 1° Bari ({primo_bari})",
+                            "tipo_calcolo": f"Sommativo da 1° Bari ({primo_bari}) +{FISSO_OTTIMIZZATO}",
                             "ambata": ambata,
                             "ambo": [ambata, abbinamento],
                             "ambetti": [
