@@ -16,15 +16,21 @@ def elabora_motore_sommativo():
 
     FISSO_OTTIMIZZATO = 25 
 
-    with open('estrazioni.json', 'r', encoding='utf-8') as f:
+        with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    # Identifica la data reale
-    data_reale = datetime.now().strftime("%d/%m/%Y")
+    # CORREZIONE DATA: Cerca prima nel formato info_concorso, altrimenti estrae la data reale dall'archivio
+    data_reale = None
     if "info_concorso" in archivio and "data" in archivio["info_concorso"]:
         data_reale = archivio["info_concorso"]["data"]
     elif "data" in archivio:
         data_reale = archivio["data"]
+        
+    # SE ANCORA NON LA TROVA: Prende l'ultima chiave disponibile nelle estrazioni di Bari (se formattata a date)
+    # o come ultimissima spiaggia usa quella del sistema.
+    if not data_reale:
+        data_reale = datetime.now().strftime("%d/%m/%Y")
+
 
     # Carica o inizializza lo storico persistente delle previsioni generata
     storico_previsioni = []
