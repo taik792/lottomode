@@ -16,23 +16,19 @@ def elabora_motore_sommativo():
 
     FISSO_OTTIMIZZATO = 25 
 
-        with open('estrazioni.json', 'r', encoding='utf-8') as f:
+    with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    # CORREZIONE DATA: Cerca prima nel formato info_concorso, altrimenti estrae la data reale dall'archivio
+    # GESTIONE DATA: Prende la data reale dal concorso per evitare sfasamenti giornalieri
     data_reale = None
     if "info_concorso" in archivio and "data" in archivio["info_concorso"]:
         data_reale = archivio["info_concorso"]["data"]
     elif "data" in archivio:
         data_reale = archivio["data"]
         
-    # SE ANCORA NON LA TROVA: Prende l'ultima chiave disponibile nelle estrazioni di Bari (se formattata a date)
-    # o come ultimissima spiaggia usa quella del sistema.
     if not data_reale:
         data_reale = datetime.now().strftime("%d/%m/%Y")
 
-
-    # Carica o inizializza lo storico persistente delle previsioni generata
     storico_previsioni = []
     if os.path.exists('storico_cronologico_v8.json'):
         with open('storico_cronologico_v8.json', 'r', encoding='utf-8') as sf:
@@ -48,10 +44,8 @@ def elabora_motore_sommativo():
     archivio_pulito = {k.upper(): v for k, v in archivio.items() if isinstance(v, list)}
 
     if "BARI" in archivio_pulito and len(archivio_pulito["BARI"]) > 0:
-        # Recuperiamo l'intera sequenza per calcolare le posizioni
         lista_bari = archivio_pulito["BARI"]
         lista_milano = archivio_pulito.get("MILANO", [])
-        
         ultima_estrazione_bari = lista_bari[-1]
         
         if isinstance(ultima_estrazione_bari, list) and len(ultima_estrazione_bari) >= 1:
@@ -65,7 +59,6 @@ def elabora_motore_sommativo():
                     [ambata, fuori_90(abbinamento - 1)]
                 ]
                 
-                # Registra la previsione corrente se non esiste già nello storico salvato su file
                 if not any(x['data'] == data_reale for x in storico_previsioni):
                     storico_previsioni.append({
                         "data": data_reale,
@@ -78,7 +71,6 @@ def elabora_motore_sommativo():
                     with open('storico_cronologico_v8.json', 'w', encoding='utf-8') as sf:
                         json.dump(storico_previsioni, sf, indent=4, ensure_ascii=False)
 
-                # Costruisce la sezione "Previsione in Corso"
                 for ruota_chiave in ["BARI", "MILANO"]:
                     if ruota_chiave in archivio_pulito and len(archivio_pulito[ruota_chiave]) > 0:
                         risultati_finali["previsioni"][ruota_chiave] = {
@@ -89,19 +81,16 @@ def elabora_motore_sommativo():
                             "ambetti": ambetti
                         }
 
-                # Ciclo di verifica per ogni previsione passata salvata nel file
                 for prev in storico_previsioni:
                     idx_inizio = prev["indice_archivio"]
-                    # Calcola quanti colpi sono passati dall'estrazione di calcolo
                     colpi_passati = (len(lista_bari) - 1) - idx_inizio
                     
                     if colpi_passati == 0:
-                        continue # È la previsione corrente appena nata stasera
+                        continue
                         
                     esito = "In gioco"
                     colpo_vincita = None
                     
-                    # Scansione dei colpi successivi alla ricerca di vincite reali
                     for c in range(1, colpi_passati + 1):
                         curr_idx = idx_inizio + c
                         if curr_idx >= len(lista_bari): break
@@ -109,12 +98,10 @@ def elabora_motore_sommativo():
                         ba_nums = [int(n) for n in lista_bari[curr_idx][:5]]
                         mi_nums = [int(n) for n in lista_milano[curr_idx][:5]] if curr_idx < len(lista_milano) else []
                         
-                        # Controllo Ambo
                         if (prev["ambo"][0] in ba_nums and prev["ambo"][1] in ba_nums) or (prev["ambo"][0] in mi_nums and prev["ambo"][1] in mi_nums):
                             esito = "AMBO SECCO VINCENTE!"
                             colpo_vincita = c
                             break
-                        # Controllo Ambata
                         elif (prev["ambata"] in ba_nums) or (prev["ambata"] in mi_nums):
                             if esito == "In gioco":
                                 esito = "Ambata Vincente"
