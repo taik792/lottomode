@@ -19,21 +19,21 @@ def elabora_motore_sommativo():
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    # GESTIONE DATA: Prende la data reale dal concorso per evitare sfasamenti giornalieri
-    data_reale = None
+    # Standardizzazione delle ruote in maiuscolo
+    archivio_pulito = {k.upper(): v for k, v in archivio.items() if isinstance(v, list)}
+
+    if "BARI" not in archivio_pulito or len(archivio_pulito["BARI"]) == 0: return
+    
+    lista_bari = archivio_pulito["BARI"]
+    lista_milano = archivio_pulito.get("MILANO", [])
+    tot_estrazioni = len(lista_bari)
+
+    # Identifica la data dell'ultimo concorso inserito
+    data_reale = datetime.now().strftime("%d/%m/%Y")
     if "info_concorso" in archivio and "data" in archivio["info_concorso"]:
         data_reale = archivio["info_concorso"]["data"]
     elif "data" in archivio:
         data_reale = archivio["data"]
-        
-    if not data_reale:
-        data_reale = datetime.now().strftime("%d/%m/%Y")
-
-    storico_previsioni = []
-    if os.path.exists('storico_cronologico_v8.json'):
-        with open('storico_cronologico_v8.json', 'r', encoding='utf-8') as sf:
-            try: storico_previsioni = json.load(sf)
-            except: storico_previsioni = []
 
     risultati_finali = {
         "info_concorso": {"numero": "Lotto Intelligence V8", "data": data_reale},
@@ -41,82 +41,86 @@ def elabora_motore_sommativo():
         "storico_verificato": []
     }
 
-    archivio_pulito = {k.upper(): v for k, v in archivio.items() if isinstance(v, list)}
-
-    if "BARI" in archivio_pulito and len(archivio_pulito["BARI"]) > 0:
-        lista_bari = archivio_pulito["BARI"]
-        lista_milano = archivio_pulito.get("MILANO", [])
-        ultima_estrazione_bari = lista_bari[-1]
-        
-        if isinstance(ultima_estrazione_bari, list) and len(ultima_estrazione_bari) >= 1:
-            try:
-                primo_bari = int(ultima_estrazione_bari[0])
-                ambata = fuori_90(primo_bari + FISSO_OTTIMIZZATO)
-                abbinamento = calcola_diametrale(ambata)
-                ambo_secco = [ambata, abbinamento]
-                ambetti = [
-                    [ambata, fuori_90(abbinamento + 1)],
-                    [ambata, fuori_90(abbinamento - 1)]
-                ]
-                
-                if not any(x['data'] == data_reale for x in storico_previsioni):
-                    storico_previsioni.append({
-                        "data": data_reale,
-                        "primo_bari": primo_bari,
+    # 1. Elaborazione della PREVISIONE CORRENTE (Ultima estrazione)
+    ultima_estrazione_bari = lista_bari[-1]
+    if isinstance(ultima_estrazione_bari, list) and len(ultima_estrazione_bari) >= 1:
+        try:
+            primo_bari = int(ultima_estrazione_bari[0])
+            ambata = fuori_90(primo_bari + FISSO_OTTIMIZZATO)
+            abbinamento = calcola_diametrale(ambata)
+            ambo_secco = [ambata, abbinamento]
+            ambetti = [
+                [ambata, fuori_90(abbinamento + 1)],
+                [ambata, fuori_90(abbinamento - 1)]
+            ]
+            
+            for ruota_chiave in ["BARI", "MILANO"]:
+                if ruota_chiave in archivio_pulito and len(archivio_pulito[ruota_chiave]) > 0:
+                    risultati_finali["previsioni"][ruota_chiave] = {
+                        "numeri_estrazione": [int(n) for n in archivio_pulito[ruota_chiave][-1][:5]],
+                        "tipo_calcolo": f"Sommativo da 1° Bari ({primo_bari}) +{FISSO_OTTIMIZZATO}",
                         "ambata": ambata,
                         "ambo": ambo_secco,
-                        "ambetti": ambetti,
-                        "indice_archivio": len(lista_bari) - 1
-                    })
-                    with open('storico_cronologico_v8.json', 'w', encoding='utf-8') as sf:
-                        json.dump(storico_previsioni, sf, indent=4, ensure_ascii=False)
+                        "ambetti": ambetti
+                    }
+        except (ValueError, IndexError):
+            pass
 
-                for ruota_chiave in ["BARI", "MILANO"]:
-                    if ruota_chiave in archivio_pulito and len(archivio_pulito[ruota_chiave]) > 0:
-                        risultati_finali["previsioni"][ruota_chiave] = {
-                            "numeri_estrazione": [int(n) for n in archivio_pulito[ruota_chiave][-1][:5]],
-                            "tipo_calcolo": f"Sommativo da 1° Bari ({primo_bari}) +{FISSO_OTTIMIZZATO}",
-                            "ambata": ambata,
-                            "ambo": ambo_secco,
-                            "ambetti": ambetti
-                        }
-
-                for prev in storico_previsioni:
-                    idx_inizio = prev["indice_archivio"]
-                    colpi_passati = (len(lista_bari) - 1) - idx_inizio
-                    
-                    if colpi_passati == 0:
-                        continue
-                        
-                    esito = "In gioco"
-                    colpo_vincita = None
-                    
-                    for c in range(1, colpi_passati + 1):
-                        curr_idx = idx_inizio + c
-                        if curr_idx >= len(lista_bari): break
-                        
-                        ba_nums = [int(n) for n in lista_bari[curr_idx][:5]]
-                        mi_nums = [int(n) for n in lista_milano[curr_idx][:5]] if curr_idx < len(lista_milano) else []
-                        
-                        if (prev["ambo"][0] in ba_nums and prev["ambo"][1] in ba_nums) or (prev["ambo"][0] in mi_nums and prev["ambo"][1] in mi_nums):
-                            esito = "AMBO SECCO VINCENTE!"
-                            colpo_vincita = c
-                            break
-                        elif (prev["ambata"] in ba_nums) or (prev["ambata"] in mi_nums):
-                            if esito == "In gioco":
-                                esito = "Ambata Vincente"
-                                colpo_vincita = c
-
-                    risultati_finali["storico_verificato"].append({
-                        "data": prev["data"],
-                        "ambata": prev["ambata"],
-                        "ambo": f"{prev['ambo'][0]} - {prev['ambo'][1]}",
-                        "colpi": f"{colpi_passati}° Colpo" if esito == "In gioco" else f"VINTO al {colpo_vincita}° colpo",
-                        "stato": esito
-                    })
-
-            except (ValueError, IndexError):
-                pass
+    # 2. RICOSTRUZIONE AUTOMATICA DELLO STORICO (Leggendo indietro l'archivio delle estrazioni)
+    # Analizziamo le ultime 10 estrazioni passate (escludendo l'ultima che è in corso)
+    limite_storico = max(0, tot_estrazioni - 11)
+    
+    for i in range(tot_estrazioni - 2, limite_storico - 1, -1):
+        if i < 0: break
+        
+        estrazione_b = lista_bari[i]
+        if not isinstance(estrazione_b, list) or len(estrazione_b) < 1: continue
+        
+        try:
+            p_bari = int(estrazione_b[0])
+            ambata_p = fuori_90(p_bari + FISSO_OTTIMIZZATO)
+            abbinamento_p = calcola_diametrale(ambata_p)
+            ambo_p = [ambata_p, abbinamento_p]
+            
+            # Quanti colpi reali sono passati da questa estrazione passata all'ultima disponibile?
+            colpi_passati = (tot_estrazioni - 1) - i
+            
+            esito = "In gioco"
+            colpo_vincita = None
+            
+            # Scansione dei colpi successivi per verificare se ha vinto nel passato
+            for c in range(1, colpi_passati + 1):
+                curr_idx = i + c
+                if curr_idx >= tot_estrazioni: break
+                
+                ba_nums = [int(n) for n in lista_bari[curr_idx][:5]]
+                mi_nums = [int(n) for n in lista_milano[curr_idx][:5]] if curr_idx < len(lista_milano) else []
+                
+                if (ambata_p in ba_nums and abbinamento_p in ba_nums) or (ambata_p in mi_nums and abbinamento_p in mi_nums):
+                    esito = "AMBO SECCO VINCENTE!"
+                    colpo_vincita = c
+                    break
+                elif (ambata_p in ba_nums) or (ambata_p in mi_nums):
+                    if esito == "In gioco":
+                        esito = "Ambata Vincente"
+                        colpo_vincita = c
+            
+            # Se la previsione ha superato i 9 colpi e non ha vinto, marchiala come conclusa
+            if esito == "In gioco" and colpi_passati > 9:
+                esito = "Ciclo concluso (No esito)"
+            
+            # Creiamo una data indicativa per lo storico basata sull'indice posizionale
+            data_label = f"Concorso Arretrat. -{colpi_passati}"
+            
+            risultati_finali["storico_verificato"].append({
+                "data": data_label,
+                "ambata": ambata_p,
+                "ambo": f"{ambata_p} - {abbinamento_p}",
+                "colpi": f"{colpi_passati}° Colpo" if esito == "In gioco" else f"Esito al {colpo_vincita}° colpo" if colpo_vincita else "Chiuso",
+                "stato": esito
+            })
+        except (ValueError, IndexError):
+            pass
 
     with open('risultati_v4.json', 'w', encoding='utf-8') as f:
         json.dump(risultati_finali, f, indent=4, ensure_ascii=False)
