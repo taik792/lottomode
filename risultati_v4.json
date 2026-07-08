@@ -6,51 +6,51 @@
     "previsioni": {
         "BARI": {
             "numeri_estrazione": [
-                81,
-                71,
-                24,
-                27,
-                1
+                31,
+                53,
+                78,
+                76,
+                37
             ],
-            "tipo_calcolo": "Sommativo da 1° Bari (81) +25",
-            "ambata": 16,
+            "tipo_calcolo": "Sommativo da 1° Bari (31) +25",
+            "ambata": 56,
             "ambo": [
-                16,
-                61
+                56,
+                11
             ],
             "ambetti": [
                 [
-                    16,
-                    62
+                    56,
+                    12
                 ],
                 [
-                    16,
-                    60
+                    56,
+                    10
                 ]
             ]
         },
         "MILANO": {
             "numeri_estrazione": [
-                80,
-                12,
-                25,
-                10,
-                76
+                49,
+                2,
+                54,
+                33,
+                14
             ],
-            "tipo_calcolo": "Sommativo da 1° Bari (81) +25",
-            "ambata": 16,
+            "tipo_calcolo": "Sommativo da 1° Bari (31) +25",
+            "ambata": 56,
             "ambo": [
-                16,
-                61
+                56,
+                11
             ],
             "ambetti": [
                 [
-                    16,
-                    62
+                    56,
+                    12
                 ],
                 [
-                    16,
-                    60
+                    56,
+                    10
                 ]
             ]
         }
