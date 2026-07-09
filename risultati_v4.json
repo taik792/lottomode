@@ -6,51 +6,51 @@
     "previsioni": {
         "BARI": {
             "numeri_estrazione": [
-                31,
-                53,
-                78,
-                76,
-                37
+                61,
+                1,
+                90,
+                69,
+                54
             ],
-            "tipo_calcolo": "Sommativo da 1° Bari (31) +25",
-            "ambata": 56,
+            "tipo_calcolo": "Sommativo da 1° Bari (61) +25",
+            "ambata": 86,
             "ambo": [
-                56,
-                11
+                86,
+                41
             ],
             "ambetti": [
                 [
-                    56,
-                    12
+                    86,
+                    42
                 ],
                 [
-                    56,
-                    10
+                    86,
+                    40
                 ]
             ]
         },
         "MILANO": {
             "numeri_estrazione": [
-                49,
-                2,
-                54,
-                33,
-                14
+                10,
+                53,
+                26,
+                46,
+                56
             ],
-            "tipo_calcolo": "Sommativo da 1° Bari (31) +25",
-            "ambata": 56,
+            "tipo_calcolo": "Sommativo da 1° Bari (61) +25",
+            "ambata": 86,
             "ambo": [
-                56,
-                11
+                86,
+                41
             ],
             "ambetti": [
                 [
-                    56,
-                    12
+                    86,
+                    42
                 ],
                 [
-                    56,
-                    10
+                    86,
+                    40
                 ]
             ]
         }
@@ -65,66 +65,66 @@
         },
         {
             "data": "Concorso Arretrat. -2",
-            "ambata": 65,
-            "ambo": "65 - 20",
+            "ambata": 87,
+            "ambo": "87 - 42",
             "colpi": "2° Colpo",
             "stato": "In gioco"
         },
         {
             "data": "Concorso Arretrat. -3",
-            "ambata": 87,
-            "ambo": "87 - 42",
+            "ambata": 49,
+            "ambo": "49 - 4",
             "colpi": "3° Colpo",
             "stato": "In gioco"
         },
         {
             "data": "Concorso Arretrat. -4",
-            "ambata": 49,
-            "ambo": "49 - 4",
-            "colpi": "Esito al 4° colpo",
+            "ambata": 71,
+            "ambo": "71 - 26",
+            "colpi": "Esito al 3° colpo",
             "stato": "Ambata Vincente"
         },
         {
             "data": "Concorso Arretrat. -5",
-            "ambata": 71,
-            "ambo": "71 - 26",
-            "colpi": "Esito al 4° colpo",
-            "stato": "Ambata Vincente"
-        },
-        {
-            "data": "Concorso Arretrat. -6",
-            "ambata": 28,
-            "ambo": "28 - 73",
-            "colpi": "6° Colpo",
+            "ambata": 21,
+            "ambo": "21 - 66",
+            "colpi": "5° Colpo",
             "stato": "In gioco"
         },
         {
+            "data": "Concorso Arretrat. -6",
+            "ambata": 71,
+            "ambo": "71 - 26",
+            "colpi": "Esito al 5° colpo",
+            "stato": "Ambata Vincente"
+        },
+        {
             "data": "Concorso Arretrat. -7",
-            "ambata": 43,
-            "ambo": "43 - 88",
+            "ambata": 50,
+            "ambo": "50 - 5",
             "colpi": "Esito al 1° colpo",
             "stato": "Ambata Vincente"
         },
         {
             "data": "Concorso Arretrat. -8",
-            "ambata": 67,
-            "ambo": "67 - 22",
-            "colpi": "8° Colpo",
-            "stato": "In gioco"
+            "ambata": 70,
+            "ambo": "70 - 25",
+            "colpi": "Esito al 2° colpo",
+            "stato": "Ambata Vincente"
         },
         {
             "data": "Concorso Arretrat. -9",
-            "ambata": 25,
-            "ambo": "25 - 70",
-            "colpi": "Esito al 8° colpo",
+            "ambata": 78,
+            "ambo": "78 - 33",
+            "colpi": "Esito al 7° colpo",
             "stato": "Ambata Vincente"
         },
         {
             "data": "Concorso Arretrat. -10",
-            "ambata": 21,
-            "ambo": "21 - 66",
-            "colpi": "Chiuso",
-            "stato": "Ciclo concluso (No esito)"
+            "ambata": 56,
+            "ambo": "56 - 11",
+            "colpi": "Esito al 7° colpo",
+            "stato": "Ambata Vincente"
         }
     ]
 }
