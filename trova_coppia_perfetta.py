@@ -15,19 +15,20 @@ def analizza_tutte_le_coppie():
         print("Errore: estrazioni.json non trovato.")
         return
 
-    # 🎯 SCEGLI QUI LA RUOTA DI PARTENZA (es. CAGLIARI, NAPOLI, ROMA, FIRENZE, ecc.)
+    # Ruota di partenza impostata su CAGLIARI
     RUOTA_PARTENZA = "CAGLIARI" 
 
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
 
-    ruote_disponibili = [k.upper() for k, v in archivio.items() if isinstance(v, list) and len(v) > 0]
+    # CORREZIONE: Standardizziamo l'intero archivio in lettere MAIUSCOLE prima di lavorarlo
+    archivio_pulito = {k.upper(): v for k, v in archivio.items() if isinstance(v, list) and len(v) > 0}
     
-    if RUOTA_PARTENZA not in ruote_disponibili:
-        print(f"Errore: La ruota {RUOTA_PARTENZA} non è presente nell'archivio.")
+    if RUOTA_PARTENZA not in archivio_pulito:
+        print(f"Errore: La ruota {RUOTA_PARTENZA} non è stata trovata nell'archivio. Ruote rilevate: {list(archivio_pulito.keys())}")
         return
 
-    estrazioni_base = archivio[RUOTA_PARTENZA]
+    estrazioni_base = archivio_pulito[RUOTA_PARTENZA]
     tot_estrazioni = len(estrazioni_base)
     
     miglior_coppia_assoluta = None
@@ -35,48 +36,44 @@ def analizza_tutte_le_coppie():
 
     print(f"🔬 Analisi in corso... Cerco la migliore ruota da accoppiare a {RUOTA_PARTENZA} su {tot_estrazioni} estrazioni.")
 
-    # Testiamo la ruota di partenza con OGNI ALTRA RUOTA possibile
-    for ruota_recupero in ruote_disponibili:
+    for ruota_recupero, estrazioni_recupero in archivio_pulito.items():
         if ruota_recupero == RUOTA_PARTENZA or ruota_recupero == "NAZIONALE": continue
         
-        estrazioni_recupero = archivio[ruota_recupero]
-        
-        # Per questa coppia di ruote, testiamo tutti i 90 fissi sommativi
         for fisso in range(1, 91):
             vincite_ambata = 0
             vincite_ambo = 0
             totale_previsioni = 0
 
-            # Ciclo storico sui concorsi (lasciando fuori gli ultimi 9 per i colpi)
             for i in range(tot_estrazioni - 9):
                 if i >= len(estrazioni_recupero): break
                 if not estrazioni_base[i] or len(estrazioni_base[i]) < 1: continue
                 
-                # Calcolo basato sulla ruota di partenza
-                primo_numero = int(estrazioni_base[i][0])
-                ambata = fuori_90(primo_numero + fisso)
-                abbinamento = calcola_diametrale(ambata)
-                
-                totale_previsioni += 1
-                vinta_ambata = False
-                vinto_ambo = False
-
-                # Controllo nei 9 colpi successivi sulle due ruote in esame
-                for colpo in range(1, 10):
-                    idx = i + colpo
-                    if idx >= tot_estrazioni or idx >= len(estrazioni_recupero): break
+                try:
+                    primo_numero = int(estrazioni_base[i][0]) if isinstance(estrazioni_base[i], list) else int(estrazioni_base[i])
+                    ambata = fuori_90(primo_numero + fisso)
+                    abbinamento = calcola_diametrale(ambata)
                     
-                    num_base_futuri = [int(n) for n in estrazioni_base[idx][:5]]
-                    num_recu_futuri = [int(n) for n in estrazioni_recupero[idx][:5]]
+                    totale_previsioni += 1
+                    vinta_ambata = False
+                    vinto_ambo = False
 
-                    if not vinta_ambata and ((ambata in num_base_futuri) or (ambata in num_recu_futuri)):
-                        vincite_ambata += 1
-                        vinta_ambata = True
+                    for colpo in range(1, 10):
+                        idx = i + colpo
+                        if idx >= tot_estrazioni or idx >= len(estrazioni_recupero): break
+                        
+                        num_base_futuri = [int(n) for n in estrazioni_base[idx][:5]]
+                        num_recu_futuri = [int(n) for n in estrazioni_recupero[idx][:5]]
 
-                    if not vinto_ambo:
-                        if (ambata in num_base_futuri and abbinamento in num_base_futuri) or (ambata in num_recu_futuri and abbinamento in num_recu_futuri):
-                            vincite_ambo += 1
-                            vinto_ambo = True
+                        if not vinta_ambata and ((ambata in num_base_futuri) or (ambata in num_recu_futuri)):
+                            vincite_ambata += 1
+                            vinta_ambata = True
+
+                        if not vinto_ambo:
+                            if (ambata in num_base_futuri and abbinamento in num_base_futuri) or (ambata in num_recu_futuri and abbinamento in num_recu_futuri):
+                                vincite_ambo += 1
+                                vinto_ambo = True
+                except:
+                    continue
 
             if vincite_ambo > max_ambi_vinti and totale_previsioni > 0:
                 max_ambi_vinti = vincite_ambo
