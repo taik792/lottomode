@@ -14,7 +14,7 @@ def calcola_diametrale(numero):
 def elabora_motore_sommativo():
     if not os.path.exists('estrazioni.json'): return
 
-    FISSO_OTTIMIZZATO = 31 
+    FISSO_OTTIMIZZATO = 17 
 
     with open('estrazioni.json', 'r', encoding='utf-8') as f:
         archivio = json.load(f)
