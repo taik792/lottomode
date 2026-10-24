@@ -19,11 +19,11 @@ def scopri_fisso_migliore():
         archivio = json.load(f)
 
     ruote = {k.upper(): v for k, v in archivio.items() if isinstance(v, list)}
-    if "BARI" not in ruote or "MILANO" not in ruote: return
+    if "MILANO" not in ruote or "MILANO" not in ruote: return
 
-    estrazioni_bari = ruote["BARI"]
     estrazioni_milano = ruote["MILANO"]
-    tot_estrazioni = len(estrazioni_bari)
+    estrazioni_venezia = ruote["VENEZIA"]
+    tot_estrazioni = len(estrazioni_milano)
     
     classifica_fisso = []
 
@@ -36,10 +36,10 @@ def scopri_fisso_migliore():
         totale_previsioni = 0
 
         for i in range(tot_estrazioni - 9):
-            if not estrazioni_bari[i] or len(estrazioni_bari[i]) < 1: continue
+            if not estrazioni_milano[i] or len(estrazioni_milano[i]) < 1: continue
             
-            primo_bari = int(estrazioni_bari[i][0])
-            ambata = fuori_90(primo_bari + fisso)
+            primo_milano = int(estrazioni_milano[i][0])
+            ambata = fuori_90(primo_milano + fisso)
             abbinamento = calcola_diametrale(ambata)
             
             totale_previsioni += 1
@@ -48,8 +48,8 @@ def scopri_fisso_migliore():
 
             for colpo in range(1, 10):
                 idx = i + colpo
-                num_ba = [int(n) for n in estrazioni_bari[idx][:5]]
-                num_mi = [int(n) for n in estrazioni_milano[idx][:5]]
+                num_ba = [int(n) for n in estrazioni_milano[idx][:5]]
+                num_mi = [int(n) for n in estrazioni_venezia[idx][:5]]
 
                 if not vinta_ambata and ((ambata in num_ba) or (ambata in num_mi)):
                     vincite_ambata += 1
