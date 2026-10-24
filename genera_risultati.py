@@ -96,11 +96,11 @@ def elabora_motore_sommativo():
                 mi_nums = [int(n) for n in lista_milano[curr_idx][:5]]
                 ve_nums = [int(n) for n in lista_venezia[curr_idx][:5]] if curr_idx < len(lista_venezia) else []
                 
-                if (ambata_p in ba_nums and abbinamento_p in ba_nums) or (ambata_p in mi_nums and abbinamento_p in mi_nums):
+                if (ambata_p in mi_nums and abbinamento_p in mi_nums) or (ambata_p in ve_nums and abbinamento_p in ve_nums):
                     esito = "AMBO SECCO VINCENTE!"
                     colpo_vincita = c
                     break
-                elif (ambata_p in ba_nums) or (ambata_p in mi_nums):
+                elif (ambata_p in mi_nums) or (ambata_p in ve_nums):
                     if esito == "In gioco":
                         esito = "Ambata Vincente"
                         colpo_vincita = c
