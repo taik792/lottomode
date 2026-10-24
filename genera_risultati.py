@@ -94,7 +94,7 @@ def elabora_motore_sommativo():
                 if curr_idx >= tot_estrazioni: break
                 
                 ba_nums = [int(n) for n in lista_milano[curr_idx][:5]]
-                mi_nums = [int(n) for n in lista_venezia[curr_idx][:5]] if curr_idx < len(lista_milano) else []
+                mi_nums = [int(n) for n in lista_venezia[curr_idx][:5]] if curr_idx < len(lista_venezia) else []
                 
                 if (ambata_p in ba_nums and abbinamento_p in ba_nums) or (ambata_p in mi_nums and abbinamento_p in mi_nums):
                     esito = "AMBO SECCO VINCENTE!"
