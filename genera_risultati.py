@@ -25,7 +25,7 @@ def elabora_motore_sommativo():
     if "MILANO" not in archivio_pulito or len(archivio_pulito["MILANO"]) == 0: return
     
     lista_milano = archivio_pulito["MILANO"]
-    lista_milano = archivio_pulito.get("VENEZIA", [])
+    lista_venezia = archivio_pulito.get("VENEZIA", [])
     tot_estrazioni = len(lista_milano)
 
     # Identifica la data dell'ultimo concorso inserito
