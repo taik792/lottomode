@@ -22,7 +22,7 @@ def elabora_motore_sommativo():
     # Standardizzazione delle ruote in maiuscolo
     archivio_pulito = {k.upper(): v for k, v in archivio.items() if isinstance(v, list)}
 
-    if "MILANO" not in archivio_pulito or len(archivio_pulito["MILANO"]) == 0: return
+    if "MILANO" not in archivio_pulito or len(archivio_pulito["VENEZIA"]) == 0: return
     
     lista_milano = archivio_pulito["MILANO"]
     lista_venezia = archivio_pulito.get("VENEZIA", [])
