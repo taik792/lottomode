@@ -25,9 +25,9 @@ def esegui_backtest():
         print("Errore: Ruote di BARI o MILANO non trovate nell'archivio.")
         return
 
-    estrazioni_bari = ruote_pulite["BARI"]
-    estrazioni_milano = ruote_pulite["MILANO"]
-    tot_estrazioni = len(estrazioni_bari)
+    estrazioni_bari = ruote_pulite["MILANO"]
+    estrazioni_milano = ruote_pulite["VENEZIA"]
+    tot_estrazioni = len(estrazioni_milano)
 
     # Variabili per le statistiche
     totale_previsioni = 0
