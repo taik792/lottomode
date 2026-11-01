@@ -21,12 +21,12 @@ def esegui_backtest():
     # Pulizia delle ruote e standardizzazione in maiuscolo
     ruote_pulite = {k.upper(): v for k, v in archivio_completo.items() if isinstance(v, list)}
     
-    if "BARI" not in ruote_pulite or "MILANO" not in ruote_pulite:
-        print("Errore: Ruote di BARI o MILANO non trovate nell'archivio.")
+    if "MILANO" not in ruote_pulite or "VENEZIA" not in ruote_pulite:
+        print("Errore: Ruote di MILANO o VENEZIA non trovate nell'archivio.")
         return
 
-    estrazioni_bari = ruote_pulite["MILANO"]
-    estrazioni_milano = ruote_pulite["VENEZIA"]
+    estrazioni_milano = ruote_pulite["MILANO"]
+    estrazioni_venezia = ruote_pulite["VENEZIA"]
     tot_estrazioni = len(estrazioni_milano)
 
     # Variabili per le statistiche
@@ -41,15 +41,15 @@ def esegui_backtest():
 
     # Ciclo su tutte le estrazioni storiche (lasciamo le ultime 9 fuori perché non avrebbero i colpi per completarsi)
     for i in range(tot_estrazioni - 9):
-        # 1. Trova la condizione di partenza (1° di Bari)
-        estrazione_corrente_bari = estrazioni_bari[i]
-        if not estrazione_corrente_bari or len(estrazione_corrente_bari) < 1:
+        # 1. Trova la condizione di partenza (1° di milano)
+        estrazione_corrente_milano = estrazioni_milano[i]
+        if not estrazione_corrente_milano or len(estrazione_corrente_milano) < 1:
             continue
             
-        primo_bari = int(estrazione_corrente_bari[0])
+        primo_milano = int(estrazione_corrente_milano[0])
         
         # 2. Calcola la previsione con le tue formule
-        ambata = fuori_90(primo_bari + 15)
+        ambata = fuori_90(primo_milano + 80)
         abbinamento = calcola_diametrale(ambata)
         ambo_secco = [ambata, abbinamento]
         
@@ -61,26 +61,26 @@ def esegui_backtest():
         for colpo in range(1, 10):
             indice_estrazione = i + colpo
             
-            # Estrazioni reali nei colpi successivi su Bari e Milano
-            num_bari_futuri = [int(n) for n in estrazioni_bari[indice_estrazione][:5]]
+            # Estrazioni reali nei colpi successivi su Milano e Venezia
             num_milano_futuri = [int(n) for n in estrazioni_milano[indice_estrazione][:5]]
+            num_venezia_futuri = [int(n) for n in estrazioni_venezia[indice_estrazione][:5]]
             
             # Controllo Ambata
             if not vinta_ambata_qua:
-                if (ambata in num_bari_futuri) or (ambata in num_milano_futuri):
+                if (ambata in num_milano_futuri) or (ambata in num_venezia_futuri):
                     vincite_ambata += 1
                     colpi_totale_ambata += colpo
                     vinta_ambata_qua = True
-                    print(f"[OK] Ambata {ambata} vinta al {colpo}° colpo (Calcolata da 1° Ba: {primo_bari})")
+                    print(f"[OK] Ambata {ambata} vinta al {colpo}° colpo (Calcolata da 1° Ba: {primo_milano})")
             
             # Controllo Ambo Secco (entrambi i numeri devono essere nella stessa ruota nello stesso colpo)
             if not vinto_ambo_qua:
-                ambo_su_bari = ambo_secco[0] in num_bari_futuri and ambo_secco[1] in num_bari_futuri
                 ambo_su_milano = ambo_secco[0] in num_milano_futuri and ambo_secco[1] in num_milano_futuri
-                if ambo_su_bari or ambo_su_milano:
+                ambo_su_venezia = ambo_secco[0] in num_venezia_futuri and ambo_secco[1] in num_venezia_futuri
+                if ambo_su_milano or ambo_su_venezia:
                     vincite_ambo += 1
                     vinto_ambo_qua = True
-                    ruota_vincita = "BARI" if ambo_su_bari else "MILANO"
+                    ruota_vincita = "MILANO" if ambo_su_milano else "VENEZIA"
                     print(f"🌟 [BOOM] AMBO SECCO {ambo_secco[0]}-{ambo_secco[1]} su {ruota_vincita} al {colpo}° colpo!")
 
     # 4. Calcolo e stampa delle percentuali finali
